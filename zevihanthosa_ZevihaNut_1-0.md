@@ -72,7 +72,7 @@ The `AdvancedBrain` class extends `Brain` by introducing layers of brains, each 
 - `momentum_default`: The default momentum value for the layers.
 - `kingvalue`: The weight for the "king" cell of the first layer.
 - `hostkingvalue`: The weight for the "king" cell of the host layer.
--# Extra: auto_layers_randomize=False, auto_layers_randomize_minlayercount=1, auto_layers_randomize_maxlayercount=5, auto_layers_randomize_minmain=64, auto_layers_randomize_maxmain=512, auto_layers_randomize_mincutter=1, auto_layers_randomize_maxcutter=3
+```Extra: auto_layers_randomize=False, auto_layers_randomize_minlayercount=1, auto_layers_randomize_maxlayercount=5, auto_layers_randomize_minmain=64, auto_layers_randomize_maxmain=512, auto_layers_randomize_mincutter=1, auto_layers_randomize_maxcutter=3```
 #### Functions:
 - `save()`: Saves the state of the advanced brain, including all layers and king cell.
 - `load(data)`: Loads the saved state of the advanced brain.
