@@ -436,7 +436,7 @@ class Chatbot:
 					most = 0
 					mostv = float("inf")
 					for hh, v in self.grammar.items():
-						diff = difflib.SequenceMatcher(None, hh, h).ratio()
+						diff = 1-difflib.SequenceMatcher(None, hh, h).ratio()
 						if vector_temperature >= diff:
 							canbe.append(v)
 						if diff <= mostv:
@@ -469,7 +469,7 @@ class Chatbot:
 					most = 0
 					mostv = float("inf")
 					for hh, v in self.grammar.items():
-						diff = difflib.SequenceMatcher(None, hh, h).ratio()
+						diff = 1-difflib.SequenceMatcher(None, hh, h).ratio()
 						if vector_temperature >= diff:
 							canbe.append(v)
 						if diff <= mostv:
@@ -558,7 +558,7 @@ class AdvancedChatbot:
 					most = 0
 					mostv = float("inf")
 					for hh, v in self.grammar.items():
-						diff = difflib.SequenceMatcher(None, hh, h).ratio()
+						diff = 1-difflib.SequenceMatcher(None, hh, h).ratio()
 						if vector_temperature >= diff:
 							canbe.append(v)
 						if diff <= mostv:
@@ -591,7 +591,7 @@ class AdvancedChatbot:
 					most = 0
 					mostv = float("inf")
 					for hh, v in self.grammar.items():
-						diff = difflib.SequenceMatcher(None, hh, h).ratio()
+						diff = 1-difflib.SequenceMatcher(None, hh, h).ratio()
 						if vector_temperature >= diff:
 							canbe.append(v)
 						if diff <= mostv:
