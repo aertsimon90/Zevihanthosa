@@ -1,79 +1,226 @@
 # Zevihanthosa
 
-## What is Zevihanthosa?
+What is Zevihanthosa?
 
-Zevihanthosa is an advanced artificial intelligence system developed by aertsimon90. It is designed to push the boundaries of machine learning by creating a flexible, adaptive, and highly efficient AI architecture. The core feature of Zevihanthosa is its dynamic, weight-based learning process, enhanced by a momentum-driven training mechanism, which improves learning speed and accuracy. The model also integrates customizable activation functions and multiple decision-making strategies, providing flexibility for various tasks.
+Zevihanthosa is an advanced artificial intelligence framework developed by aertsimon90. It is designed to provide a flexible, beginner-friendly, and highly efficient AI architecture. Unlike complex frameworks such as TensorFlow or PyTorch, Zevihanthosa offers a simplified yet powerful AI development environment, allowing fine-tuned adjustments without unnecessary complexity.
 
-The Zevihanthosa framework supports both single-layer and multi-layer architectures, allowing it to be tailored to a wide range of applications. With a strong focus on scalability, this AI system is designed to evolve and improve continuously through updates, enhancing its performance for diverse use cases.
+A core feature of Zevihanthosa is its dynamic, weight-based learning process, enhanced by a momentum-driven training mechanism, which improves both learning speed and accuracy. The framework supports custom activation functions, multi-layer architectures, and decision-making strategies, making it suitable for a wide range of applications.
 
-
----
-
-## Current Models and Versions
-
-### Latest Release: ZevihaNut/1.4
-
-ZevihaNut/1.4 is the latest iteration of the Zevihanthosa AI framework, introducing several key enhancements and features to improve its overall performance and versatility:
-
-New Activation Function (bisigmoid): A new bisigmoid activation function has been introduced, which outputs values between -1 and 1. This offers better scalability and adaptability, providing a smoother transition for decision-making processes. The bisigmoid function enhances the model's ability to manage both positive and negative activations with greater precision.
-
-Enhanced Neural Processing System: The Brain module has been further refined, improving weight distribution and dynamic memory handling. The backpropagation mechanism has also been optimized, resulting in faster, more accurate learning and a more stable training process.
-
-Hybrid Vectorization: A combination of grammar-based learning, hash-based vectorization, and adaptive tokenization has been introduced. This hybrid approach ensures more efficient language understanding and context processing. New methods of tokenization have been developed to improve the parsing of text and enhance the model's ability to understand and respond contextually.
-
-Momentum-Based Training: The training process has been further optimized with momentum-driven mechanisms. This improvement ensures smoother learning progression, balancing speed and stability to prevent drastic fluctuations during training.
-
-Multi-Layer Support: The AdvancedChatbot class now supports deeper learning with automatic layer structuring, allowing ZevihaNut/1.4 to tackle more complex tasks. The multi-layer architecture enables the model to make more informed decisions and respond with greater efficiency.
-
-Improved Tokenization Methods: New tokenization techniques have been added to split text in ways that mirror natural human reading patterns. These methods include sentence-based, basic word-based, and directive-based tokenization, ensuring more accurate parsing of text for better understanding and response generation.
-
-Context Manager: A new feature called ContextManager has been introduced, which allows chatbots to handle and track conversational context more effectively. This enables better context switching, improved long-term memory, and more accurate responses.
-
-Automatic Data Saving and Loading: ZevihaNut/1.4 now supports automatic saving and loading of the AI brain's training data. This allows developers to easily save progress and load previously saved models, making the training process more efficient and streamlined.
-
+With its focus on scalability, usability, and efficiency, Zevihanthosa continues to evolve, integrating cutting-edge improvements with each update.
 
 
 ---
 
-## Upcoming Versions
+Current Models and Versions
 
-Future updates will focus on:
+Latest Release: ZevihaNut/1.5
 
-Faster training algorithms to improve learning efficiency.
+ZevihaNut/1.5 introduces major enhancements, making Zevihanthosa more powerful and accessible. Some of the key features include:
 
-Advanced deep learning techniques for more complex decision-making tasks.
+New Features in ZevihaNut/1.5
 
-Improved adaptability to various data structures and use cases, including better handling of multi-modal data and different input formats.
+1. ONCEbende Chatbot AI
+
+A pre-trained chatbot model called ONCEbende has been introduced, trained with 1MB of conversational data.
+
+Users can download ONCEbende’s AI brain JSON file from the GitHub repository and integrate it into their chatbot system using the load_file method.
+
+
+
+2. Hidden Layer Support
+
+Zevihanthosa now follows advanced AI standards by incorporating hidden layers into its neural networks.
+
+This improvement enables better abstraction and learning efficiency.
+
+
+
+3. Improved Chatbot Data Handling
+
+All chatbot AI models now store input data with language identifiers, allowing multilingual AI development.
+
+The format update ensures seamless integration of multiple languages in chatbot training.
+
+
+
+4. Language Detection & Translation
+
+New functions have been introduced to automatically detect input language.
+
+A new GoogleTranslator class allows efficient text translation and language processing for multilingual support.
+
+
+
+5. Unicode Standard for AI Models
+
+AI models that rely solely on Unicode character processing are now classified as low-level.
+
+This change encourages the development of more advanced AI systems capable of deep learning and contextual understanding.
+
+
+
+6. Enhanced AI Training Stability
+
+Several bug fixes and optimizations have been implemented to enhance training performance and stability.
+
+
+
+7. Automatic Data Saving & Loading
+
+AI objects can now automatically save and reload their trained data, making AI training more seamless.
+
+
+
+8. Expanded Context Management
+
+Improved ContextManager functionality for handling chatbot conversations more effectively.
+
+
+
+9. More User-Friendly Implementation
+
+ZevihaNut/1.5 focuses on ease of use, making Zevihanthosa more beginner-friendly while maintaining advanced features.
+
+
 
 
 
 ---
 
-## Is Zevihanthosa Open Source?
+Upcoming Features (Possible Future Additions)
 
-Yes! Zevihanthosa is completely open-source, allowing developers to contribute, modify, and integrate the AI system into their own projects. The goal is to foster collaboration and make cutting-edge AI accessible to everyone.
+1. Hugging Face API Integration
+
+A simple client for integrating Hugging Face models directly within Zevihanthosa.
+
+
+
+2. ONCEbende-2 Chatbot AI
+
+A second-generation ONCEbende model with an expanded dataset and improved conversational AI.
+
+
+
+3. Logistic Regression Models
+
+AI models designed for industrial applications, such as decision-making in hiring processes.
+
+Example use case: "Should this candidate be hired?"
+
+
+
+4. High-Speed, Lightweight Chatbot Model
+
+A fast and efficient chatbot AI without neural networks, relying solely on text processing and pattern matching.
+
+
+
+5. Improved Text Translation for Chatbots
+
+A new nearest-meaning translation function for AI chatbots.
+
+
+
 
 
 ---
 
-## Installation & Usage
+Is Zevihanthosa Open Source?
 
-To use Zevihanthosa, simply clone the repository and follow the installation guide in the documentation.
+Yes! Zevihanthosa is completely open-source, allowing developers to contribute, modify, and integrate the AI system into their projects. The goal is to foster collaboration and make cutting-edge AI accessible to everyone.
 
-```bash
-git clone https://github.com/aertsimon90/Zevihanthosa.git  
-cd Zevihanthosa  
-pip install -r requirements.txt
-```
 
 ---
 
-## Contact Information
+Installation & Usage
 
-For inquiries or contributions, feel free to contact:
+To use Zevihanthosa, follow these steps:
+
+Step 1: Install Git
+
+If you don’t have Git installed, download it by searching for "GIT Download" online.
+
+For Linux users, install Git using:
+
+apk install git
+
+
+Step 2: Clone the Repository
+
+Open a command-line terminal and run:
+
+git clone https://github.com/aertsimon90/Zevihanthosa
+
+Step 3: Navigate to the Repository
+
+By default, the terminal opens in your working directory.
+
+If you're using Windows, navigate to the desktop using:
+
+cd Desktop
+
+Enter the Zevihanthosa directory:
+
+cd Zevihanthosa
+
+
+Step 4: Importing Zevihanthosa in Python
+
+1. Find the latest version from the README.md file.
+
+
+2. Locate the model file in the repository.
+
+
+3. File Naming Convention:
+
+Model filenames follow this format:
+
+zevihanthosa_ModelName_Version-VersionDetail.py
+
+For importing in Python, replace - with _, like this:
+
+import zevihanthosa_ModelName_Version_VersionDetail
+
+Alternatively, you can rename the file (e.g., custom.py) and import it using:
+
+import custom
+
+
+
+
+Step 5: Using Zevihanthosa
+
+Read the source code to understand the framework's structure.
+
+Experiment and test different functions to get familiar with its capabilities.
+
+
+Step 6: ONCEbende Chatbot AI Setup
+
+To install the ONCEbende chatbot AI brain, follow these steps:
+
+1. Download the ONCEbende JSON AI brain file from the GitHub repository.
+
+
+2. Integrate it into your chatbot system using:
+
+load_file(chatbot, "ONCEbende_zn1-5_advanced.json")
+
+
+
+Step 7: Running AI Models
+
+Once installed, train, test, and customize Zevihanthosa for your use cases.
+
+If you encounter any issues, check the GitHub documentation for troubleshooting.
+
+
+
+---
+
+Contact Information
+
+For inquiries, contributions, or support, feel free to contact:
+
 Email: simon.scap090@gmail.com
-
-
----
-
-Explore the repository, experiment with the code, and contribute to the future of Zevihanthosa!
