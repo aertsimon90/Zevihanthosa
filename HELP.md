@@ -90,7 +90,7 @@ import custom
 Ensure that your Python script is in the same directory as the Zevihanthosa files, or adjust the sys.path accordingly. Then, use the correct import format:
 
 ```py
-import zevihanthosa_ZevihaNut_1_4  # Example for ZevihaNut/1.4
+import zevihanthosa_ZevihaNut_1_5 # Example for ZevihaNut/1.5
 ```
 
 > Do not use from zevihanthosa_X import Y. Always use import zevihanthosa_X for full integration.
@@ -112,9 +112,9 @@ For beginners, Zevihanthosa includes simplified functions that make it easier to
 For example, to use the process_noob function, which processes input in a simple way:
 
 ```py
-import zevihanthosa_ZevihaNut_1_4
+import zevihanthosa_ZevihaNut_1_5
 
-brain = zevihanthosa_ZevihaNut_1_4.Brain()  
+brain = zevihanthosa_ZevihaNut_1_5.Brain()  
 print(brain.process_noob(1))  # Example of a simple processing function
 ```
 
