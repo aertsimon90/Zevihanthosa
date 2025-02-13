@@ -205,8 +205,9 @@ To install the ONCEbende chatbot AI brain, follow these steps:
 
 2. Integrate it into your chatbot system using:
 
+```py
 load_file(chatbot, "ONCEbende_zn1-5_advanced.json")
-
+```
 
 
 Step 7: Running AI Models
