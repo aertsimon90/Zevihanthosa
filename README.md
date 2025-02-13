@@ -142,14 +142,17 @@ If you don’t have Git installed, download it by searching for "GIT Download" o
 
 For Linux users, install Git using:
 
+```bash
 apk install git
-
+```
 
 Step 2: Clone the Repository
 
 Open a command-line terminal and run:
 
+```bash
 git clone https://github.com/aertsimon90/Zevihanthosa
+```
 
 Step 3: Navigate to the Repository
 
@@ -157,12 +160,15 @@ By default, the terminal opens in your working directory.
 
 If you're using Windows, navigate to the desktop using:
 
+```bash
 cd Desktop
+```
 
 Enter the Zevihanthosa directory:
 
+```bash
 cd Zevihanthosa
-
+```
 
 Step 4: Importing Zevihanthosa in Python
 
@@ -176,16 +182,19 @@ Step 4: Importing Zevihanthosa in Python
 
 Model filenames follow this format:
 
-zevihanthosa_ModelName_Version-VersionDetail.py
+**zevihanthosa_ModelName_Version-VersionDetail.py**
 
 For importing in Python, replace - with _, like this:
 
+```py
 import zevihanthosa_ModelName_Version_VersionDetail
+```
 
 Alternatively, you can rename the file (e.g., custom.py) and import it using:
 
+```py
 import custom
-
+```
 
 
 
