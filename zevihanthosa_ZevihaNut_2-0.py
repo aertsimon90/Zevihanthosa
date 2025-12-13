@@ -3,9 +3,9 @@ import math
 
 class Cell:
     def __init__(self, weight=None, bias=None, learning=None, truely=1, momentumexc=0.9):
-        self.weight = float(weight) if weight else random.random()
-        self.bias = float(bias) if bias else (random.random()*2)-1
-        self.learning = float(learning) if learning else random.random()
+        self.weight = float(weight) if weight is not None else random.random()
+        self.bias = float(bias) if bias is not None else (random.random()*2)-1
+        self.learning = float(learning) if learning is not None else random.random()
         self.mw = 0
         self.mb = 0
         self.truely = truely
@@ -53,10 +53,10 @@ class DataCell:
 
 class MultiCell:
     def __init__(self, weights=None, wcount=2, bias=None, learning=None, truely=1, momentumexc=0.9):
-        self.weights = list(weights) if weights else [random.random() for _ in range(wcount)]
-        self.bias = float(bias) if bias else (random.random()*2)-1
-        self.learning = float(learning) if learning else random.random()
-        self.wcount = len(weights) if weights else int(wcount)
+        self.weights = list(weights) if weights is not None else [random.random() for _ in range(wcount)]
+        self.bias = float(bias) if bias is not None else (random.random()*2)-1
+        self.learning = float(learning) if learning is not None else random.random()
+        self.wcount = len(weights) if weights is not None else int(wcount)
         self.mw = [0]*self.wcount
         self.mb = 0.0
         self.truely = truely
