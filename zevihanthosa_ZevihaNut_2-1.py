@@ -94,7 +94,7 @@ class FuncCell:
         self.margin = margin
         self.procs = ["+sumr", "*mult", "/dive", "**forc", "%rema"]
         self.traindepth = traindepth
-        self.exnums = []
+        self.exnums = [math.pi, math.e]
     def comb(self, x="x"):
         return [x+h for h in self.procs]
     def comb2(self, x=[]):
