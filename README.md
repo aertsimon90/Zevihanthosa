@@ -112,10 +112,11 @@ print("Current smooth estimate:", dc.process(0.7, train=False))
 
 # 3. MultiCell – learning to approximate sum
 mc = MultiCell(wcount=2, learning=0.08)
-for _ in range(20000):
-    a, b = random.random(), random.random()
-    mc.process([a, b], target=a + b)
-print("MultiCell [0.2, 0.9] ≈", mc.process([0.2, 0.9], train=False))
+for _ in range(30000):
+    a = random.randint(1, 10)
+    b = random.randint(1, 10)
+    mc.process([1/a, 1/b], target=1/(a + b))
+print("MultiCell [7, 2] ≈", 1/mc.process([1/7, 1/2], train=False))
 
 # 4. FuncCell – discovering square root
 fc = FuncCell(traindepth=2)
