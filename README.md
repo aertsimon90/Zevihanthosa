@@ -114,14 +114,14 @@ for _ in range(15000):
     mc.process([a, b], target=a + b)
 print("MultiCell [0.4, 0.6] →", mc.process([0.4, 0.6], train=False))
 
-# Example 4: FuncCell discovering x² pattern (New!)
-fc = FuncCell(maxdatac=64, range=10, rangc=1, traindepth=2)
-for x in [i/10 for i in range(-20, 21)]:
-    y = x ** 2 / 10  # scaled parabola
-    fc.process(x*0.5 + 0.5, target=y)  # normalize x to [0,1]
+# Example 4: FuncCell discovering square root
+fc = FuncCell(maxdatac=64, range=8, rangc=16, traindepth=2)
+for x in [i for i in range(1, 6)]:
+    y = math.sqrt(x)
+    fc.process(x, target=y)
 
 print("Discovered function:", fc.func)
-print("Test x=0.8 (norm) →", fc.process(0.8, train=False))
+print("Test x=12 →", fc.process(12, train=False))
 ```
 
 ### Why Zevihanthosa?
