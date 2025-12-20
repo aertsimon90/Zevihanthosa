@@ -94,13 +94,14 @@ class FuncCell:
         self.margin = margin
         self.procs = ["+sumr", "*mult", "/dive", "**forc", "%rema"]
         self.traindepth = traindepth
+        self.nums = []
         self.exnums = [math.pi, math.e]
     def comb(self, x="x"):
         return [x+h for h in self.procs]
     def comb2(self, x=[]):
         lx = x if x else self.comb()
         lx2 = []
-        nums = list(range(-self.range, self.range+1))+list(numpy.linspace(-self.range, self.range, self.rangc))+self.exnums
+        nums = self.nums if self.nums else list(range(-self.range, self.range+1))+list(numpy.linspace(-self.range, self.range, self.rangc))+self.exnums
         for comb in lx:
             sumrs = nums if "sumr" in comb else [0]
             mults = nums if "mult" in comb else [1]
