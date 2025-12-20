@@ -1,4 +1,5 @@
-# Zevihanthosa - Advanced Artificial Intelligence Framework  
+# Zevihanthosa - Advanced Artificial Intelligence Framework 
+[ZevihaNut Logo](ZevihaNut.png)
 ## ZevihaNut/2.1 Model (Latest Release - December 2025)
 
 *A lightweight, pure-Python, highly extensible neural computation framework combining parametric, non-parametric, and symbolic learning units.*
