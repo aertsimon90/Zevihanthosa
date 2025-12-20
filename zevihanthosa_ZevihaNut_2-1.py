@@ -95,7 +95,7 @@ class FuncCell:
         self.procs = ["+sumr", "*mult", "/dive", "**forc", "%rema"]
         self.traindepth = traindepth
     def comb(self, x="x"):
-        return ["("+x+h+")" for h in self.procs]
+        return [x+h for h in self.procs]
     def combs(self, depth=1):
         listx = self.comb()
         if depth == 0:
