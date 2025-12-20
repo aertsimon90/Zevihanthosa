@@ -1,125 +1,151 @@
 # Zevihanthosa - Advanced Artificial Intelligence Framework  
-## ZevihaNut/2.0 Model
+## ZevihaNut/2.1 Model (Latest Release)
 
-*A lightweight, pure-Python, highly extensible neural computation framework focused on hybrid parametric and non-parametric learning units.*
+*A lightweight, pure-Python, highly extensible neural computation framework focused on hybrid parametric, non-parametric, and symbolic learning units.*
 
 ### Overview
 
-**Zevihanthosa** is an innovative, minimalist artificial intelligence framework designed for rapid prototyping, experimentation, and deployment of custom neural-inspired architectures. At its core lies the **ZevihaNut/2.0** model release — a fully standardized, rigorously tested, and stabilized version that introduces three foundational "cell" types for building intelligent systems.
+**Zevihanthosa** is an innovative, minimalist artificial intelligence framework designed for rapid experimentation, prototyping, and deployment of unconventional, human-interpretable intelligent systems.
 
-Unlike traditional deep learning frameworks that rely on massive layers of homogeneous neurons, Zevihanthosa emphasizes **modularity, interpretability, and hybrid learning paradigms**. It combines classic gradient-based sigmoid units with momentum optimization and a unique instance-based memory cell, enabling the creation of systems that blend symbolic precision with adaptive, memory-augmented reasoning.
+The **ZevihaNut/2.1** release introduces a powerful fourth core component: **FuncCell** — a symbolic regression cell capable of automatically discovering compact mathematical expressions that best fit observed input-output patterns. This addition elevates the framework from hybrid neural/memory-based learning to true **hybrid symbolic-neural intelligence**, enabling systems that can learn both adaptive weights and exact, interpretable formulas.
 
-The entire framework is implemented in pure Python with no external dependencies beyond the standard library (`random` and `math`), making it extremely lightweight, portable, and suitable for embedded or educational environments.
+Built entirely in pure Python with only minimal standard library dependencies (`random`, `math`, `numpy` for controlled sampling), Zevihanthosa remains extremely lightweight, portable, and ideal for education, research, embedded systems, or creative AI exploration.
 
-ZevihaNut/2.0 has undergone extensive internal testing, including edge cases (empty memory, zero differences, extreme values), basic functionality checks, and weight limitation enforcement. All tests have passed successfully, confirming stability and correctness.
+ZevihaNut/2.1 has been rigorously refined: all known bugs fixed (including critical MultiCell limitation), edge cases hardened, and the new symbolic discovery mechanism bounded for practical usability.
 
 ### Key Features
 
-- **Pure Python Implementation**: No heavy dependencies — runs anywhere Python does.
-- **Online Learning**: All cells update immediately per sample (fully incremental).
-- **Built-in Momentum**: Smooth and accelerated gradient updates (default momentum 0.9).
-- **Weight/Bias Clamping**: Automatic limitation to prevent explosion/divergence.
-- **Hybrid Intelligence**: Combines traditional neural computation with memory-based non-parametric learning.
-- **Auto-Associative Defaults**: Cells can operate in unsupervised modes when targets are omitted.
-- **Highly Customizable**: Easy to extend with new cell types or compose into complex networks.
+- **Pure Python Implementation**: No heavy dependencies (only `numpy` used optionally in FuncCell).
+- **Online & Incremental Learning**: Every cell adapts immediately per example.
+- **Momentum-Optimized Gradients**: Smooth convergence with configurable momentum (default 0.9).
+- **Numerical Safety**: Built-in weight/bias clamping to prevent divergence.
+- **Four Complementary Learning Paradigms**:
+  - Parametric (gradient-based sigmoid neurons)
+  - Non-parametric (instance-based memory averaging)
+  - Multi-input fusion
+  - Symbolic regression (automatic function discovery)
+- **Auto-Associative & Unsupervised Modes**: Works seamlessly without explicit targets.
+- **Maximum Interpretability**: Cells are transparent, inspectable, and often human-readable (especially FuncCell).
 
 ### Core Components
 
-#### 1. `Cell` — Momentum-Optimized Sigmoid Neuron
-A classic single-input logistic unit enhanced with momentum and advanced features.
+#### 1. `Cell` — Momentum-Optimized Single-Input Sigmoid Neuron
+Classic logistic unit with momentum, per-cell learning rate, and bias scaling.
 
-- Input range assumption: `[0, 1]` (internally mapped to `[-1, 1]`).
-- Sigmoid activation: `σ(z) = 1 / (1 + exp(-z))`.
-- Gradient descent with momentum on both weight and bias.
-- `truely` parameter: Scales bias influence (useful for gating or modulation).
-- Separate learning rate per cell.
-- `limitation()` method clamps weight ∈ [1/512, 512] and bias ∈ [-512, 512] by default.
+- Input normalized internally from `[0,1]` → `[-1,1]`.
+- Sigmoid activation with gradient descent + momentum.
+- `truely` parameter modulates bias strength (useful for gating).
+- `limitation()` enforces numerical stability.
 
-Ideal for binary classification, regression, or as building blocks in larger networks.
+Perfect for simple regression, classification, or as gated building blocks.
 
-#### 2. `DataCell` — Adaptive Memory-Based Regression Unit
-A non-parametric, instance-based learner with fixed short-term memory.
+#### 2. `DataCell` — Adaptive Instance-Based Memory Unit
+Non-parametric learner with fixed-size short-term memory buffer.
 
-- Maintains a buffer of up to `maxdatac` (default 64) past (input → averaged output) pairs.
-- For inference: Performs weighted averaging of stored outputs, where weights are inversely proportional to input distance.
-- Highly robust handling of edge cases (empty memory → returns 0.5 neutral).
-- During training: Blends prediction with target and stores the average (smooth online adaptation).
-- Behaves like a dynamic local regressor or temporal smoother.
+- Stores up to `maxdatac` (default 64) recent averaged input-output pairs.
+- Predicts via distance-weighted averaging of stored outputs.
+- Robust edge-case handling (empty memory returns neutral 0.5).
+- Smooth online adaptation by blending prediction with target.
 
-Excellent for time-series forecasting, anomaly detection, or as a "working memory" module in cognitive architectures.
+Ideal for time-series smoothing, denoising, anomaly detection, or cognitive "working memory".
 
 #### 3. `MultiCell` — Multi-Input Sigmoid Neuron
-Generalization of `Cell` to arbitrary input dimensions.
+Generalization of `Cell` to arbitrary input vectors.
 
-- Supports variable number of weighted inputs.
-- Same momentum, learning rate, truely, and clamping mechanics as `Cell`.
-- Default unsupervised target: average of (normalized) inputs (autoencoder-like behavior).
+- Variable number of weights with shared learning and momentum.
+- Same safety and optimization features as `Cell`.
+- Default unsupervised target: average of normalized inputs.
 
-Perfect for feature fusion, multi-modal processing, or dense layer equivalents.
+Great for feature fusion, dense layers, or multimodal integration.
+
+#### 4. `FuncCell` — Symbolic Regression Discovery Unit **(New in 2.1)**
+A groundbreaking cell that automatically evolves compact mathematical expressions to explain observed data.
+
+- Maintains a memory buffer of input-target pairs (like DataCell).
+- Searches over compositional expressions built from basic operators: `+`, `*`, `/`, `**`, `%`.
+- Controlled search depth (`traindepth`, default 2) prevents combinatorial explosion.
+- Uses brute-force enumeration over operator combinations and numeric constants.
+- Selects the simplest expression with lowest total absolute error.
+- Once discovered, evaluates exactly using `eval()` on the learned formula.
+- Falls back to memory averaging if no good fit found.
+
+Enables interpretable modeling, equation discovery, and hybrid symbolic-numeric reasoning.
+
+Excellent for scientific modeling, reverse engineering functions, or creating fully transparent predictors.
 
 ### Installation
 
 ```bash
-# Simply copy the source file into your project
+# Clone the repository or copy the source file
 git clone https://github.com/aertsimon90/Zevihanthosa.git
-# or directly save the classes into zevihanthosa.py
+cd Zevihanthosa
+# Then simply import in your project
 ```
 
-No pip install required — just import the classes.
+No pip install needed — pure Python module.
 
 ### Usage Examples
 
 ```python
 from zevihanthosa import *
 import random
+import math
 
-# Example 1: Basic Cell learning XOR-like pattern
-cell = Cell(learning=0.1)
+# Example 1: Cell learning a step function
+cell = Cell(learning=0.2)
 for _ in range(10000):
-    inp = random.choice([0.0, 1.0])
-    target = 1.0 if inp > 0.5 else 0.0
-    cell.process(inp, target)
+    x = random.random()
+    target = 1.0 if x > 0.6 else 0.0
+    cell.process(x, target)
+print("Cell 0.5 →", cell.process(0.5, train=False))
+print("Cell 0.7 →", cell.process(0.7, train=False))
 
-print("Trained Cell: 0.0 →", cell.process(0.0, train=False))
-print("Trained Cell: 1.0 →", cell.process(1.0, train=False))
+# Example 2: DataCell denoising noisy signal
+dc = DataCell(maxdatac=50)
+for i in range(200):
+    noisy = 0.5 + random.gauss(0, 0.15)
+    dc.process(noisy, target=0.5)
+print("Current estimate:", dc.process(0.65, train=False))
 
-# Example 2: DataCell as adaptive filter
-dc = DataCell(maxdatac=32)
-for i in range(100):
-    noisy_input = 0.5 + random.gauss(0, 0.1)
-    dc.process(noisy_input, target=0.5)  # trying to learn mean=0.5
-
-print("Denoised estimate:", dc.process(0.6, train=False))
-
-# Example 3: MultiCell for simple addition approximation
-mc = MultiCell(wcount=2, learning=0.05)
-for _ in range(20000):
+# Example 3: MultiCell approximating addition
+mc = MultiCell(wcount=2, learning=0.1)
+for _ in range(15000):
     a, b = random.random(), random.random()
-    mc.process([a, b], target=(a + b)/2)  # learn average
+    mc.process([a, b], target=a + b)
+print("MultiCell [0.4, 0.6] →", mc.process([0.4, 0.6], train=False))
 
-print("MultiCell [0.3, 0.7] →", mc.process([0.3, 0.7], train=False))
+# Example 4: FuncCell discovering x² pattern (New!)
+fc = FuncCell(maxdatac=64, range=8, rangc=16, traindepth=2)
+for x in [i/10 for i in range(-20, 21)]:
+    y = x ** 2 / 10  # scaled parabola
+    fc.process(x*0.5 + 0.5, target=y)  # normalize x to [0,1]
+
+print("Discovered function:", fc.func)
+print("Test x=0.8 (norm) →", fc.process(0.8, train=False))
 ```
 
 ### Why Zevihanthosa?
 
-- **Educational Clarity**: Every operation is transparent and readable.
-- **Research Flexibility**: Easy to modify activation functions, add new cell types, or hybridize.
-- **Efficiency**: Minimal overhead — ideal for micro-controllers or real-time systems.
-- **Stability**: ZevihaNut/2.0 fixes known edge cases and enforces numerical safety.
+- **True Hybrid Intelligence**: Combines neural, memory-based, and symbolic learning in one lightweight package.
+- **Unparalleled Interpretability**: From weights to full mathematical formulas.
+- **Educational & Research Friendly**: Clear, readable code with no black-box magic.
+- **Lightweight & Portable**: Runs on microcontrollers, servers, or notebooks alike.
+- **Stable & Battle-Tested**: ZevihaNut/2.1 fixes all prior bugs and introduces safe symbolic search.
 
 ### Future Roadmap
 
-- Layer and Network abstraction utilities.
-- Serialization (save/load cell states).
-- Visualization tools for weight evolution and memory contents.
-- Integration examples with reinforcement learning or evolutionary algorithms.
-- GPU acceleration hooks (optional).
+- Full network/layer composition utilities.
+- Cell serialization and checkpointing.
+- Visualization dashboard for memory, weights, and discovered functions.
+- Genetic programming extensions for deeper symbolic search.
+- Optional PyTorch backend for acceleration.
+- Reinforcement learning and evolutionary integration examples.
 
 ### License
 
-MIT License — free for commercial and academic use.
+MIT License — free for commercial, academic, and personal use.
 
 ---
 
-**Zevihanthosa — Where simplicity meets advanced hybrid intelligence.**  
-*ZevihaNut/2.0 — Tested. Standardized. Ready.*
+**Zevihanthosa — Simplicity. Interpretability. Hybrid Intelligence.**  
+*ZevihaNut/2.1 — Now with Symbolic Function Discovery. Tested. Ready.*
