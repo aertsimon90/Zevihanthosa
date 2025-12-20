@@ -96,46 +96,52 @@ class FuncCell:
         self.traindepth = traindepth
     def comb(self, x="x"):
         return [x+h for h in self.procs]
+    def comb2(self, x=[]):
+        lx = x if x else self.comb()
+        lx2 = []
+        nums = list(range(-self.range, self.range+1))
+        for comb in lx:
+            sumrs = nums if "sumr" in comb else [0]
+            mults = nums if "mult" in comb else [1]
+            dives = nums if "dive" in comb else [1]
+            forcs = nums if "forc" in comb else [1]
+            remas = list(range(-self.range, self.range)) if "rema" in comb else [float("inf")]
+            for sumr in sumrs:
+                for mult in mults:
+                    for dive in dives:
+                        for forc in forcs:
+                            for rema in remas:
+                                comb2 = comb.replace("sumr", str(sumr)).replace("mult", str(mult)).replace("dive", str(dive)).replace("forc", str(forc)).replace("rema", str(rema))
+                                lx2.append(comb2)
+        return lx2
     def combs(self, depth=1):
-        listx = self.comb()
+        lx = self.comb2()
         if depth == 0:
-            return listx
+            return lx
         else:
-            listx = sum([self.comb(x) for x in listx], start=[])
-            for _ in range(depth-1):
-                listx = sum([self.comb(x) for x in listx], start=[])
-            return listx
+            for _ in range(depth):
+                lx = sum([self.comb(x) for x in lx], start=[])
+                lx = self.comb2(lx)
+            return lx
     def eval(self, func):
         return eval(func)
     def train(self):
         outs = [i for _, i in self.outputs]
         most = ""
         mostv = float("inf")
-        nums = list(range(-self.range, self.range+1))+list(numpy.linspace(-self.range, self.range, self.rangc))
         for combsc in range(self.traindepth):
-            for comb in self.combs(combsc):
-                sumrs = nums if "sumr" in comb else [0]
-                mults = nums if "mult" in comb else [1]
-                dives = nums if "dive" in comb else [1]
-                forcs = nums if "forc" in comb else [1]
-                remas = list(range(-self.range, self.range)) if "rema" in comb else [float("inf")]
-                for sumr in sumrs:
-                    for mult in mults:
-                        for dive in dives:
-                            for forc in forcs:
-                                for rema in remas:
-                                    func = comb.replace("sumr", str(sumr)).replace("mult", str(mult)).replace("dive", str(dive)).replace("forc", str(forc)).replace("rema", str(rema))
-                                    try:
-                                        outs2 = [self.eval(func.replace("x", str(x))) for x, _ in self.outputs]
-                                        diff = sum([abs(i-i2) for i, i2 in zip(outs2, outs)])
-                                        if diff <= self.margin:
-                                            self.func = func
-                                            return
-                                        if diff < mostv:
-                                            mostv = diff
-                                            most = func
-                                    except:
-                                        pass
+            for func in self.combs(combsc):
+                try:
+                    outs2 = [self.eval(func.replace("x", str(x))) for x, _ in self.outputs]
+                    diff = sum([abs(i-i2) for i, i2 in zip(outs2, outs)])
+                    if diff <= self.margin:
+                        self.func = func
+                        return
+                    if diff < mostv:
+                        mostv = diff
+                        most = func
+                except:
+                    pass
         self.func = most
     def process(self, input, target=None, train=True):
         if target is None:
@@ -150,4 +156,3 @@ class FuncCell:
             if train:
                 self.outputs = (self.outputs+[[input, target]])[-self.maxdatac:]
                 self.train()
-            return target
