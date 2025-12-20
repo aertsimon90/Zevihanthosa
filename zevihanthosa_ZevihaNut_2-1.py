@@ -85,7 +85,7 @@ class MultiCell:
         return output
 
 class FuncCell:
-    def __init__(self, maxdatac=64, range=8, rangc=16, margin=0):
+    def __init__(self, maxdatac=64, range=8, rangc=16, margin=0, traindepth=2):
         self.func = ""
         self.range = range
         self.rangc = rangc
@@ -93,7 +93,7 @@ class FuncCell:
         self.maxdatac = maxdatac
         self.margin = margin
         self.procs = ["+sumr", "*mult", "/dive", "**forc", "%rema"]
-        self.traindepth = 2
+        self.traindepth = traindepth
     def comb(self, x="x"):
         return ["("+x+h+")" for h in self.procs]
     def combs(self, depth=1):
@@ -105,6 +105,8 @@ class FuncCell:
             for _ in range(depth-1):
                 listx = sum([self.comb(x) for x in listx], start=[])
             return listx
+    def eval(self, func):
+        return eval(func)
     def train(self):
         outs = [i for _, i in self.outputs]
         most = ""
@@ -123,9 +125,8 @@ class FuncCell:
                             for forc in forcs:
                                 for rema in remas:
                                     func = comb.replace("sumr", str(sumr)).replace("mult", str(mult)).replace("dive", str(dive)).replace("forc", str(forc)).replace("rema", str(rema))
-                                    print(func) if func == "x%5" else None
                                     try:
-                                        outs2 = [eval(func.replace("x", str(x))) for x, _ in self.outputs]
+                                        outs2 = [self.eval(func.replace("x", str(x))) for x, _ in self.outputs]
                                         diff = sum([abs(i-i2) for i, i2 in zip(outs2, outs)])
                                         if diff <= self.margin:
                                             self.func = func
@@ -140,7 +141,7 @@ class FuncCell:
         if target is None:
             target = input
         if self.func:
-            output = eval(self.func.replace("x", str(input)))
+            output = self.eval(self.func.replace("x", str(input)))
             if train:
                 self.outputs = (self.outputs+[[input, target]])[-self.maxdatac:]
                 self.train()
