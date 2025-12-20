@@ -111,7 +111,7 @@ class FuncCell:
         outs = [i for _, i in self.outputs]
         most = ""
         mostv = float("inf")
-        nums = list(range(-self.range, self.range))+list(numpy.linspace(-self.range, self.range, self.rangc))
+        nums = list(range(-self.range, self.range+1))+list(numpy.linspace(-self.range, self.range, self.rangc))
         for combsc in range(self.traindepth):
             for comb in self.combs(combsc):
                 sumrs = nums if "sumr" in comb else [0]
