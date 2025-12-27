@@ -140,7 +140,7 @@ class Cell:
         self.activation = Activation()
         self.type = 0
     def limitation(self, limit=512):
-        self.weight = max(min(self.weight, limit), 1/limit)
+        self.weight = max(min(self.weight, limit), -limit)
         self.bias = max(min(self.bias, limit), -limit)
     def process(self, input, target=None, train=True, perceptron=False):
         input = (input*2)-1
@@ -207,7 +207,7 @@ class LinearMulCell:
         self.activation = Activation()
         self.type = 2
     def limitation(self, limit=512):
-        self.weight = max(min(self.weight, limit), 1/limit)
+        self.weight = max(min(self.weight, limit), -limit)
     def process(self, input, target=None, train=True, perceptron=False):
         input = (input*2)-1
         if target is None:
@@ -260,7 +260,7 @@ class MultiInputCell:
         self.activation = Activation()
         self.type = 4
     def limitation(self, limit=512):
-        self.weights = [max(min(w, limit), 1/limit) for w in self.weights]
+        self.weights = [max(min(w, limit), -limit) for w in self.weights]
         self.bias = max(min(self.bias, limit), -limit)
     def process(self, inputs, target=None, train=True, perceptron=False):
         inputs = [(i*2)-1 for i in inputs]
@@ -302,7 +302,7 @@ class MultiOutputCell:
         self.activation = Activation()
         self.type = 5
     def limitation(self, limit=512):
-        self.weights = [max(min(w, limit), 1/limit) for w in self.weights]
+        self.weights = [max(min(w, limit), -limit) for w in self.weights]
         self.biases = [max(min(b, limit), -limit) for b in self.biases]
     def process(self, input, target=None, train=True, perceptron=False):
         input = (input*2)-1
@@ -423,7 +423,7 @@ class MultiCell:
         self.type = 7
     def limitation(self, limit=512):
         for i in range(self.ocount):
-            self.weights[i] = [max(min(w, limit), 1/limit) for w in self.weights[i]]
+            self.weights[i] = [max(min(w, limit), -limit) for w in self.weights[i]]
             self.biases[i] = max(min(self.biases[i], limit), -limit)
     def process(self, input, target=None, train=True, perceptron=False):
         input = [(i*2)-1 for i in input]
