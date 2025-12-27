@@ -123,7 +123,7 @@ for x in range(5):
 print("Discovered function:", fc.func)
 print("Test on x=3 →", fc.process(3, train=False))
 ```
-Example Output:
+### Example Output:
 ```
 Cell at 0.6 → 0.041278469501507695
 Cell at 0.8 → 0.9721519183272612
