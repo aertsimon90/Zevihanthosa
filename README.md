@@ -66,7 +66,7 @@ git clone https://github.com/aertsimon90/Zevihanthosa.git
 cd Zevihanthosa
 # Import zevihanthosa.py directly into your project
 ```
-No pip install required. Optional: `pip install numpy` for `linspace` in `FuncCell`.
+No pip install required.
 
 ### Usage Examples
 ```python
