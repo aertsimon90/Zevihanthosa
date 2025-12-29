@@ -198,7 +198,7 @@ class Cell:
         self.momentumexc = momentumexc
         self.activation = Activation()
         self.type = 0
-    def limitation(self, limit=256):
+    def limitation(self, limit=512):
         self.weight = max(min(self.weight, limit), -limit)
         self.bias = max(min(self.bias, limit), -limit)
     def process(self, input, target=None, train=True, trainrate=1, perceptron=False):
@@ -570,6 +570,8 @@ class CellForest:
         self.activation = Activation()
         self.update_activation(self.activation)
         self.type = 9
+    def limitation(self, limit=512):
+        [cell.limitation(limit=limit) for cell in self.cells]
     def update_activation(self, obj):
         for i in range(self.cellscount):
             self.cells[i].activation = obj
@@ -605,6 +607,8 @@ class MultiCellForest:
         self.icount = icount
         self.ocount = ocount
         self.type = 10
+    def limitation(self, limit=512):
+        [cell.limitation(limit=limit) for cell in self.cells]
     def update_activation(self, obj):
         for i in range(self.cellscount):
             self.cells[i].activation = obj
