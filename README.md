@@ -140,8 +140,8 @@ for _ in range(25000):
     x = random.random()
     y = math.sin(x * 10) / 2 + 0.5  # fast oscillating wave
     cf.process(x, target=y, distance_sharpness=32)
-print("CellForest sin-approx at x=0.1 →", cf.process(0.1, train=False, distance_sharpness=32)) # true: 0.9207354924039483
-print("CellForest sin-approx at x=0.9 →", cf.process(0.9, train=False, distance_sharpness=32)) # true: 0.7060592426208783
+print("CellForest sin-approx at x=0.1 →", cf.process(0.1, train=False, distance_sharpness=32)) # expected: 0.9207354924039483
+print("CellForest sin-approx at x=0.9 →", cf.process(0.9, train=False, distance_sharpness=32)) # expected: 0.7060592426208783
 
 # 8. MultiCellForest – robust approximation of complex 2D function (simplified for better convergence)
 mcf = MultiCellForest(cellscount=64, icount=2, ocount=1, learning=0.08)
@@ -150,10 +150,10 @@ for _ in range(100000):
     y = random.random()
     target = (math.sin(x * 5) + math.cos(y * 5)) / 4 + 0.5  # simpler 2D oscillation (lower frequency, easier to learn)
     mcf.process([x, y], target=[target], distance_sharpness=32)
-print("MultiCellForest at [0.1, 0.2] →", mcf.process([0.1, 0.2], train=False, distance_sharpness=32)[0]) # true: 0.7549319611180857
-print("MultiCellForest at [0.9, 0.8] →", mcf.process([0.9, 0.8], train=False, distance_sharpness=32)[0]) # true: 0.09220656536782279
-print("MultiCellForest at [0.5, 0.5] →", mcf.process([0.5, 0.5], train=False, distance_sharpness=32)[0]) # true: 0.4493321321392557
-print("MultiCellForest at [0.0, 1.0] →", mcf.process([0.0, 1.0], train=False, distance_sharpness=32)[0]) # true: 0.5709155463658065
+print("MultiCellForest at [0.1, 0.2] →", mcf.process([0.1, 0.2], train=False, distance_sharpness=32)[0]) # expected: 0.7549319611180857
+print("MultiCellForest at [0.9, 0.8] →", mcf.process([0.9, 0.8], train=False, distance_sharpness=32)[0]) # expected: 0.09220656536782279
+print("MultiCellForest at [0.5, 0.5] →", mcf.process([0.5, 0.5], train=False, distance_sharpness=32)[0]) # expected: 0.4493321321392557
+print("MultiCellForest at [0.0, 1.0] →", mcf.process([0.0, 1.0], train=False, distance_sharpness=32)[0]) # expected: 0.5709155463658065
 ```
 
 ### Example Output
