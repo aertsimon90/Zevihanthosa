@@ -1,71 +1,64 @@
 # Zevihanthosa - Advanced Artificial Intelligence Framework
 ![ZevihaNut Logo](ZevihaNut.png)
-## ZevihaNut/2.3 Model (Latest Release - December 2025)
-*A lightweight, pure-Python, highly extensible neural computation framework combining parametric, non-parametric, and symbolic learning units with enhanced flexibility and serialization support.*
+
+## ZevihaNut/2.4 Model (Latest Release - December 2025)
+*A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, localized ensembles, and full dense layers — with complete serialization and enhanced numerical stability.*
 
 ### Overview
-**Zevihanthosa** is a minimalist yet powerful artificial intelligence framework designed for experimentation, education, and rapid prototyping of hybrid intelligent systems.
+**Zevihanthosa** is a minimalist, powerful, and highly extensible artificial intelligence framework designed for experimentation, education, and rapid prototyping of transparent, persistent, and hybrid intelligent systems.
 
-The **ZevihaNut/2.3** release (December 2025) introduces major enhancements:
-- Unified **Activation** class with multiple activation functions (sigmoid, tanh, ReLU, linear, and custom "zevian" mapping).
-- New cell types: **LinearSumCell**, **LinearMulCell**, **MultiOutputCell**, and fully generalized **MultiCell** (multi-input to multi-output dense layer).
-- Full **model serialization** via `save()`, `load()`, and `copy()` functions (JSON-based).
-- Improved **FuncCell** for symbolic regression (bounded expression search).
-- Perceptron-mode training option for compatible cells.
-- Advanced input/output scaling utilities (`to01`, `from01`, `nom`, `denom`, `rmtolerance`).
+The **ZevihaNut/2.4** release (December 2025) brings significant advancements:
+- New **localized ensemble cells**: `CellForest` and `MultiCellForest` for smoother, more robust function approximation
+- Ultra-lightweight **NanoCell** (momentum-free perceptron)
+- Secure **FuncCell** using AST-based expression evaluation (no unsafe `eval`)
+- Enhanced numerical tools: quantization, softsigmoid, trainrate modulation, safer division
+- Full JSON serialization for **all 11 cell types** (0–10)
+- Improved `DataCell` with better averaging and fallback logic
+- Weight initialization centered in `[-1, 1]` for faster convergence
 
-All core cells remain fully online, incremental, and momentum-optimized. The framework requires only the Python standard library plus `numpy`.
+All cells support fully **online, incremental learning** with momentum and optional perceptron mode. Only minimal dependencies required.
 
 ### Key Features
 - **Pure Python & Minimal Dependencies** (`random`, `math`, `json`, `numpy`)
-- **Fully Online Learning** – adapts instantly per sample
+- **Fully Online Learning** – instant adaptation per sample
 - **Momentum Optimization** (default 0.9)
 - **Automatic Weight/Bias Clamping**
-- **Flexible Activations** – sigmoid, tanh, ReLU, linear, custom zevian
-- **Model Persistence** – save/load entire cell states to/from JSON
-- **Seven Learning Paradigms**:
-  1. Classic sigmoid neuron (`Cell`)
-  2. Linear summation unit (`LinearSumCell`)
-  3. Linear multiplication unit (`LinearMulCell`)
-  4. Instance-based memory (`DataCell`)
-  5. Multi-input fusion (`MultiInputCell`)
-  6. Multi-output parallel processing (`MultiOutputCell`)
-  7. Full multi-input/multi-output dense layer (`MultiCell`)
-  8. Symbolic regression (`FuncCell`)
-- **High Interpretability** – human-readable formulas from FuncCell
-- **Robust Numerical Handling** – scaling helpers
+- **Flexible Activations** – sigmoid, softsigmoid, tanh, ReLU, linear, custom zevian
+- **Complete Model Persistence** – save/load/copy any cell or ensemble to/from JSON
+- **11 Learning Paradigms**:
+  1. Classic momentum-optimized neuron (`Cell`)
+  2. Additive linear unit (`LinearSumCell`)
+  3. Multiplicative linear unit (`LinearMulCell`)
+  4. Instance-based memory regressor (`DataCell`)
+  5. Multi-input fusion neuron (`MultiInputCell`)
+  6. Parallel multi-output neuron (`MultiOutputCell`)
+  7. Full dense layer (multi-in → multi-out) (`MultiCell`)
+  8. Symbolic regression with safe AST evaluation (`FuncCell`)
+  9. Minimal perceptron without momentum (`NanoCell`)
+  10. Localized single-input ensemble (`CellForest`)
+  11. Localized full dense ensemble (`MultiCellForest`)
+- **High Interpretability** – readable symbolic formulas and persistent states
+- **Robust Scaling & Quantization Tools**
 
 ### Core Components
 #### 1. `Cell` — Classic Momentum-Optimized Neuron
-Single-input sigmoid (or other activation) unit with optional perceptron mode.
+#### 2. `LinearSumCell` — `output = activation(input + bias)`
+#### 3. `LinearMulCell` — `output = activation(input * weight)`
+#### 4. `DataCell` — Distance-weighted memory-based prediction
+#### 5. `MultiInputCell` — Multiple inputs → single output
+#### 6. `MultiOutputCell` — Single input → multiple outputs
+#### 7. `MultiCell` — Full arbitrary dense layer
+#### 8. `FuncCell` — Safe symbolic regression (bounded arithmetic expressions)
+#### 9. `NanoCell` — Lightweight perceptron (no momentum)
+#### 10. `CellForest` — Distance-weighted ensemble of `Cell`s (localized learning)
+#### 11. `MultiCellForest` — Ensemble of `MultiCell`s for robust multi-dimensional mapping
 
-#### 2. `LinearSumCell` — Additive Linear Unit
-Performs `output = activation(input + bias)` – useful for offsets and shifts.
-
-#### 3. `LinearMulCell` — Multiplicative Linear Unit
-Performs `output = activation(input * weight)` – ideal for scaling and gating.
-
-#### 4. `DataCell` — Non-Parametric Memory-Based Regressor
-Fixed-size memory with distance-weighted prediction and smooth adaptation.
-
-#### 5. `MultiInputCell` — Multi-Input Fusion Neuron
-Generalizes `Cell` to arbitrary input vectors → single output with shared activation.
-
-#### 6. `MultiOutputCell` — Parallel Multi-Output Neuron
-Single input → multiple independent outputs (useful for multi-task learning).
-
-#### 7. `MultiCell` — Full Dense Layer Unit (New generalization in 2.3)
-Arbitrary inputs → arbitrary outputs (multi-input to multi-output), fully trainable dense layer equivalent. Replaces limited previous versions for general matrix operations.
-
-#### 8. `FuncCell` — Symbolic Regression Unit
-- Configurable search depth and start level
-- Bounded brute-force enumeration of expressions
-- Falls back to best-found formula
-
-### New Utilities
-- `Activation` class – configurable per cell
-- `save(obj)`, `load(data)`, `copy(obj)` – full serialization
-- Scaling helpers: `to01`, `from01`, `nom`, `denom`, `rmtolerance`
+### New in ZevihaNut/2.4
+- **Localized Ensembles** (`CellForest`, `MultiCellForest`) using quantization-based activation weighting
+- **Secure Symbolic Discovery** via AST parsing (`+`, `-`, `*`, `/`, `**`, unary ops)
+- **NanoCell** for minimal resource usage
+- **trainrate** parameter for fine-grained learning control
+- Additional utilities: `quantization`, `distance_weighted_ratio`, `softsigmoid`
 
 ### Installation
 ```bash
@@ -73,13 +66,15 @@ git clone https://github.com/aertsimon90/Zevihanthosa.git
 cd Zevihanthosa
 # Import zevihanthosa.py directly into your project
 ```
-No pip install required (manual install of `numpy` if needed: `pip install numpy`).
+No pip install required. Optional: `pip install numpy` for `linspace` in `FuncCell`.
 
 ### Usage Examples
 ```python
 from zevihanthosa import *
 import random
 import math
+
+random.seed(42) # stability
 
 # 1. Cell – learning a threshold
 cell = Cell(learning=0.15)
@@ -138,37 +133,64 @@ print("Input [0.3, 0.3] →", mc.process([0.3, 0.3], train=False))      # expect
 print("Input [0.5, 0.6] →", mc.process([0.5, 0.6], train=False))      # expected: ≈[0.3667, 0.3667, 0.3667]
 print("Input [1.0, 1.0] →", mc.process([1.0, 1.0], train=False))      # expected: ≈[0.6667, 0.6667, 0.6667]
 print("Input [0.2, 0.8] →", mc.process([0.2, 0.8], train=False))      # expected: ≈[0.3333, 0.3333, 0.3333]
+
+# 7. New: CellForest – smooth approximation of complex 1D function
+cf = CellForest(cellscount=64, learning=0.12)
+for _ in range(25000):
+    x = random.random()
+    y = math.sin(x * 10) / 2 + 0.5  # fast oscillating wave
+    cf.process(x, target=y, distance_sharpness=32)
+print("CellForest sin-approx at x=0.1 →", cf.process(0.1, train=False, distance_sharpness=32)) # true: 0.9207354924039483
+print("CellForest sin-approx at x=0.9 →", cf.process(0.9, train=False, distance_sharpness=32)) # true: 0.7060592426208783
+
+# 8. MultiCellForest – robust approximation of complex 2D function (simplified for better convergence)
+mcf = MultiCellForest(cellscount=64, icount=2, ocount=1, learning=0.08)
+for _ in range(100000):
+    x = random.random()
+    y = random.random()
+    target = (math.sin(x * 5) + math.cos(y * 5)) / 4 + 0.5  # simpler 2D oscillation (lower frequency, easier to learn)
+    mcf.process([x, y], target=[target], distance_sharpness=32)
+print("MultiCellForest at [0.1, 0.2] →", mcf.process([0.1, 0.2], train=False, distance_sharpness=32)[0]) # true: 0.7549319611180857
+print("MultiCellForest at [0.9, 0.8] →", mcf.process([0.9, 0.8], train=False, distance_sharpness=32)[0]) # true: 0.09220656536782279
+print("MultiCellForest at [0.5, 0.5] →", mcf.process([0.5, 0.5], train=False, distance_sharpness=32)[0]) # true: 0.4493321321392557
+print("MultiCellForest at [0.0, 1.0] →", mcf.process([0.0, 1.0], train=False, distance_sharpness=32)[0]) # true: 0.5709155463658065
 ```
 
-### Example Output (approximate, seed-dependent):
+### Example Output
 ```
-Cell at 0.6 → 0.03936621863731655
-Cell at 0.8 → 0.970928958839111
+Cell at 0.6 → 0.032449743937126636
+Cell at 0.8 → 0.964736878960268
 Current smooth estimate: 0.5
-MultiInputCell approx 1/(7+2) from [1/7, 1/2]: 9.04576264032236
-x = 0.0 → (x², √x): [0.01231124637701895, 0.22831731209469477]
-x = 0.25 → (x², √x): [0.0588352495562964, 0.4679160762452959]
-x = 0.5 → (x², √x): [0.23868551855471903, 0.7232844542459053]
-x = 1.0 → (x², √x): [0.8874600387615176, 0.958491484693469]
+MultiInputCell approx 1/(7+2) from [1/7, 1/2]: 9.154347961916285
+x = 0.0 → (x², √x): [0.012386497402471207, 0.2281075329679371]
+x = 0.25 → (x², √x): [0.057940683286017716, 0.4640935052228233]
+x = 0.5 → (x², √x): [0.23172214712064113, 0.7173350612656512]
+x = 1.0 → (x², √x): [0.8788366685322571, 0.9561269185033562]
 Discovered function: x**2**-1
 Test on x=3 → 1.7320508075688772
-Input [0.0, 0.0] → [0.09205978587521543, 0.09212060577720313, 0.09217526319405217]
-Input [0.3, 0.3] → [0.20459543479530345, 0.20464990031139138, 0.20469908123965996]
-Input [0.5, 0.6] → [0.35831451151931704, 0.3583188240447237, 0.3583229471663282]
-Input [1.0, 1.0] → [0.6930334838933574, 0.6929096945961872, 0.6927995870267764]
-Input [0.2, 0.8] → [0.3227756106664054, 0.3228064972197608, 0.32283250075616854]
+Input [0.0, 0.0] → [0.08736586764593907, 0.08733168916042566, 0.08730464548696337]
+Input [0.3, 0.3] → [0.19890884494565178, 0.19886873872368668, 0.19883595155082934]
+Input [0.5, 0.6] → [0.3542877079200685, 0.3542554262119176, 0.354226395777651]
+Input [1.0, 1.0] → [0.6965192587019245, 0.696553361199306, 0.696575719364518]
+Input [0.2, 0.8] → [0.3173584825325539, 0.31728153453270214, 0.3172141567520689]
+CellForest sin-approx at x=0.1 → 0.9174552098115917
+CellForest sin-approx at x=0.9 → 0.7049073494619554
+MultiCellForest at [0.1, 0.2] → 0.763393326374523
+MultiCellForest at [0.9, 0.8] → 0.1252132058772653
+MultiCellForest at [0.5, 0.5] → 0.4808383345175983
+MultiCellForest at [0.0, 1.0] → 0.5830880594786205
 ```
 
 ### Why Zevihanthosa?
-- **True Hybrid AI**: Neural + Linear + Memory + Symbolic + Full Dense Layers
-- **Maximum Transparency & Persistence**
-- **Lightweight & Portable**: Runs anywhere Python runs
-- **Educational Gold**: Clear, modular code
-- **Highly Extensible**: Easy to add new cell types or activations
+- **True Hybrid Intelligence**: Neural + Linear + Memory + Symbolic + Localized Ensembles
+- **Maximum Transparency, Persistence & Interpretability**
+- **Ultra Lightweight & Fully Portable**
+- **Ideal for Education, Research, and Embedded AI**
+- **Extremely Modular** – easy to extend with new cell types
 
 ### License
-MIT License — completely free for any use.
+MIT License — free for any use, commercial or personal.
 
 ---
-**Zevihanthosa — Where simplicity, interpretability, persistence, and hybrid intelligence converge.**
-*ZevihaNut/2.3 — December 2025: MultiCell generalization, enhanced hybrid capabilities. Ready.*
+**Zevihanthosa — Simplicity meets persistent, interpretable, hybrid intelligence.**  
+*ZevihaNut/2.4 — December 2025: Localized ensembles, secure symbolic regression, and full hybrid maturity. Ready.*
