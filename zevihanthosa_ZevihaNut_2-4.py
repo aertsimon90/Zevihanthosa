@@ -88,7 +88,7 @@ class Activation:
         self.zevian = nom
     def sigmoid(self, value):
         return 1/(1+math.exp(-value))
-    def softsigmoid(self, value):
+    def softsign(self, value):
         return (value/(1+abs(value))+1)/2
     def tanh(self, value):
         return (math.tanh(value)+1)/2
@@ -98,7 +98,10 @@ class Activation:
         return ((max(min(value, maxc), -maxc)/maxc)+1)/2
     def activation(self, value):
         value = value*self.sh
-        return self.sigmoid(value) if self.act=="s" else self.softsigmoid(value) if self.act == "ss" else self.tanh(value) if self.act=="t" else self.zevian(value) if self.act=="z" else self.relu(value, maxc=self.maxc) if self.act=="r" else self.linear(value, maxc=self.maxc)
+        return self.sigmoid(value) if self.act=="s" else self.softsign(value) if self.act == "ss" else self.tanh(value) if self.act=="t" else self.zevian(value) if self.act=="z" else self.relu(value, maxc=self.maxc) if self.act=="r" else self.linear(value, maxc=self.maxc) if self.act=="l" else value
+    def normalize(self, value): # normalize for [-1,1] processing
+        value = min(max(value, 0), 1)
+        return value if self.act=="n" else (value*2)-1 # n=none
     def save(self):
         return [self.act, self.sh, self.maxc]
     def load(self, data):
@@ -202,7 +205,7 @@ class Cell:
         self.weight = max(min(self.weight, limit), -limit)
         self.bias = max(min(self.bias, limit), -limit)
     def process(self, input, target=None, train=True, trainrate=1, perceptron=False):
-        input = (input*2)-1
+        input = self.activation.normalize(input)
         if target is None:
             target = input
         z = (input*self.weight)+(self.bias*self.truely)
@@ -238,7 +241,7 @@ class LinearSumCell:
     def limitation(self, limit=512):
         self.bias = max(min(self.bias, limit), -limit)
     def process(self, input, target=None, train=True, trainrate=1, perceptron=False):
-        input = (input*2)-1
+        input = self.activation.normalize(input)
         if target is None:
             target = input
         z = (input)+(self.bias*self.truely)
@@ -268,7 +271,7 @@ class LinearMulCell:
     def limitation(self, limit=512):
         self.weight = max(min(self.weight, limit), -limit)
     def process(self, input, target=None, train=True, trainrate=1, perceptron=False):
-        input = (input*2)-1
+        input = self.activation.normalize(input)
         if target is None:
             target = input
         z = (input*self.weight)
@@ -339,7 +342,7 @@ class MultiInputCell:
         self.weights = [max(min(w, limit), -limit) for w in self.weights]
         self.bias = max(min(self.bias, limit), -limit)
     def process(self, inputs, target=None, train=True, trainrate=1, perceptron=False):
-        inputs = [(i*2)-1 for i in inputs]
+        inputs = [self.activation.normalize(i) for i in inputs]
         if target is None:
             target = sum(inputs)/len(inputs)
         z = sum([input*self.weights[i] for i, input in enumerate(inputs)])+(self.bias*self.truely)
@@ -381,7 +384,7 @@ class MultiOutputCell:
         self.weights = [max(min(w, limit), -limit) for w in self.weights]
         self.biases = [max(min(b, limit), -limit) for b in self.biases]
     def process(self, input, target=None, train=True, trainrate=1, perceptron=False):
-        input = (input*2)-1
+        input = self.activation.normalize(input)
         if target is None:
             target = [input]*self.pcount
         outs = []
@@ -502,7 +505,7 @@ class MultiCell:
             self.weights[i] = [max(min(w, limit), -limit) for w in self.weights[i]]
             self.biases[i] = max(min(self.biases[i], limit), -limit)
     def process(self, input, target=None, train=True, trainrate=1, perceptron=False):
-        input = [(i*2)-1 for i in input]
+        input = [self.activation.normalize(i) for i in input]
         if target is None:
             avg = sum(input)/len(input)
             target = [avg]*self.ocount
@@ -543,7 +546,7 @@ class NanoCell:
         self.weight = max(min(self.weight, limit), -limit)
         self.bias = max(min(self.bias, limit), -limit)
     def process(self, input, target=None, train=True, trainrate=1, perceptron=False):
-        input = (input*2)-1
+        input = self.activation.normalize(input)
         if target is None:
             target = input
         z = (input*self.weight)+(self.bias*self.truely)
@@ -585,11 +588,15 @@ class CellForest:
             if rat > 0:
                 cells.append([self.cells[i], rat])
         return cells
-    def process(self, input, target=None, train=True, trainrate=1, perceptron=False, distance_sharpness=8):
+    def process(self, input, target=None, train=True, trainrate=1, perceptron=False, distance_sharpness=8, pointweight=True):
         results = []
+        main = 0.5
         for cell in self.get_target_cells(input, distance_sharpness=distance_sharpness):
-            results.append(cell[0].process(input, target=target, train=train, trainrate=trainrate*cell[1], perceptron=perceptron))
-        return sum(results)/len(results)
+            result = cell[0].process(input, target=target, train=train, trainrate=trainrate*cell[1], perceptron=perceptron)
+            if cell[1] == 1:
+                main = result
+            results.append(result)
+        return ((sum(results)/len(results))+main)/2 if pointweight else sum(results)/len(results)
     def savedict(self):
         return {"t": 9, "cells": [save(cell, wantdict=True) for cell in self.cells], "a": self.activation.save()}
     def loaddict(self, data):
@@ -623,15 +630,20 @@ class MultiCellForest:
             if rat > 0:
                 cells.append([self.cells[i], rat])
         return cells
-    def process(self, input, target=None, train=True, trainrate=1, perceptron=False, distance_sharpness=16):
+    def process(self, input, target=None, train=True, trainrate=1, perceptron=False, distance_sharpness=8, pointweight=True):
         results = []
+        main = []
         for cell in self.get_target_cells(input, distance_sharpness=distance_sharpness):
-            results.append(cell[0].process(input, target=target, train=train, trainrate=trainrate*cell[1], perceptron=perceptron))
+            result = cell[0].process(input, target=target, train=train, trainrate=trainrate*cell[1], perceptron=perceptron)
+            if cell[1] == 1:
+                main = result
+            results.append([[i] for i in result])
         result = results[0]
         for h in results[1:]:
             for i, h2 in enumerate(h):
-                result[i] = (result[i]+h2)/2
-        return result
+                result[i] += h2
+        result = [sum(i)/len(i) for i in result]
+        return [(i+i2)/2 for i, i2 in zip(result, main)] if pointweight else result
     def savedict(self):
         return {"t": 10, "cells": [save(cell, wantdict=True) for cell in self.cells], "a": self.activation.save(), "ic": self.icount, "oc": self.ocount}
     def loaddict(self, data):
