@@ -1,74 +1,102 @@
 # Zevihanthosa - Advanced Artificial Intelligence Framework
 ![ZevihaNut Logo](ZevihaNut.png)
 
-## ZevihaNut/2.4 Model (Latest Release - December 2025)
-*A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, localized ensembles, and full dense layers — with complete serialization and enhanced numerical stability.*
+## ZevihaNut/2.5 Model (Latest Release - January 2026)
+
+*A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, localized ensembles, and **Deep Multi-Layer Networks** — with complete serialization and enhanced numerical stability.*
 
 ### Overview
+
 **Zevihanthosa** is a minimalist, powerful, and highly extensible artificial intelligence framework designed for experimentation, education, and rapid prototyping of transparent, persistent, and hybrid intelligent systems.
 
-The **ZevihaNut/2.4** release (December 2025) brings significant advancements:
-- New **localized ensemble cells**: `CellForest` and `MultiCellForest` for smoother, more robust function approximation
-- Ultra-lightweight **NanoCell** (momentum-free perceptron)
-- Secure **FuncCell** using AST-based expression evaluation (no unsafe `eval`)
-- Enhanced numerical tools: quantization, softsigmoid, trainrate modulation, safer division
-- Full JSON serialization for **all 11 cell types** (0–10)
-- Improved `DataCell` with better averaging and fallback logic
-- Weight initialization centered in `[-1, 1]` for faster convergence
+The **ZevihaNut/2.5** release (January 2026) brings significant advancements:
+
+* **New Deep Learning Engine**: `CellNetwork` provides a full backpropagation framework for multi-layer architectures.
+* New **localized ensemble cells**: `CellForest` and `MultiCellForest` for smoother, more robust function approximation.
+* Ultra-lightweight **NanoCell** (momentum-free perceptron).
+* Secure **FuncCell** using AST-based expression evaluation (no unsafe `eval`).
+* Enhanced numerical tools: quantization, softsigmoid, trainrate modulation, safer division.
+* Full JSON serialization for **all 12 cell types** (0–11).
+* Improved `DataCell` with better averaging and fallback logic.
+* Weight initialization centered in `[-1, 1]` for faster convergence.
 
 All cells support fully **online, incremental learning** with momentum and optional perceptron mode. Only minimal dependencies required.
 
 ### Key Features
-- **Pure Python & Minimal Dependencies** (`random`, `math`, `json`, `numpy`)
-- **Fully Online Learning** – instant adaptation per sample
-- **Momentum Optimization** (default 0.9)
-- **Automatic Weight/Bias Clamping**
-- **Flexible Activations** – sigmoid, softsigmoid, tanh, ReLU, linear, custom zevian
-- **Complete Model Persistence** – save/load/copy any cell or ensemble to/from JSON
-- **11 Learning Paradigms**:
-  1. Classic momentum-optimized neuron (`Cell`)
-  2. Additive linear unit (`LinearSumCell`)
-  3. Multiplicative linear unit (`LinearMulCell`)
-  4. Instance-based memory regressor (`DataCell`)
-  5. Multi-input fusion neuron (`MultiInputCell`)
-  6. Parallel multi-output neuron (`MultiOutputCell`)
-  7. Full dense layer (multi-in → multi-out) (`MultiCell`)
-  8. Symbolic regression with safe AST evaluation (`FuncCell`)
-  9. Minimal perceptron without momentum (`NanoCell`)
-  10. Localized single-input ensemble (`CellForest`)
-  11. Localized full dense ensemble (`MultiCellForest`)
-- **High Interpretability** – readable symbolic formulas and persistent states
-- **Robust Scaling & Quantization Tools**
+
+* **Pure Python & Minimal Dependencies** (`random`, `math`, `json`, `ast`)
+* **Fully Online Learning** – instant adaptation per sample.
+* **Deep Hierarchical Learning** – full backpropagation through arbitrary layers.
+* **Momentum Optimization** (default 0.9).
+* **Automatic Weight/Bias Clamping**.
+* **Flexible Activations** – sigmoid, softsigmoid, tanh, ReLU, linear, custom zevian.
+* **Complete Model Persistence** – save/load/copy any cell or network to/from JSON.
+* **12 Learning Paradigms**:
+1. Classic momentum-optimized neuron (`Cell`)
+2. Additive linear unit (`LinearSumCell`)
+3. Multiplicative linear unit (`LinearMulCell`)
+4. Instance-based memory regressor (`DataCell`)
+5. Multi-input fusion neuron (`MultiInputCell`)
+6. Parallel multi-output neuron (`MultiOutputCell`)
+7. Full dense layer (multi-in → multi-out) (`MultiCell`)
+8. Symbolic regression with safe AST evaluation (`FuncCell`)
+9. Minimal perceptron without momentum (`NanoCell`)
+10. Localized single-input ensemble (`CellForest`)
+11. Localized full dense ensemble (`MultiCellForest`)
+12. **Deep Multi-Layer Backpropagation Network** (`CellNetwork`)
+
+
+* **High Interpretability** – readable symbolic formulas and persistent states.
+* **Robust Scaling & Quantization Tools**.
 
 ### Core Components
+
 #### 1. `Cell` — Classic Momentum-Optimized Neuron
+
 #### 2. `LinearSumCell` — `output = activation(input + bias)`
+
 #### 3. `LinearMulCell` — `output = activation(input * weight)`
+
 #### 4. `DataCell` — Distance-weighted memory-based prediction
+
 #### 5. `MultiInputCell` — Multiple inputs → single output
+
 #### 6. `MultiOutputCell` — Single input → multiple outputs
+
 #### 7. `MultiCell` — Full arbitrary dense layer
+
 #### 8. `FuncCell` — Safe symbolic regression (bounded arithmetic expressions)
+
 #### 9. `NanoCell` — Lightweight perceptron (no momentum)
+
 #### 10. `CellForest` — Distance-weighted ensemble of `Cell`s (localized learning)
+
 #### 11. `MultiCellForest` — Ensemble of `MultiCell`s for robust multi-dimensional mapping
 
-### New in ZevihaNut/2.4
-- **Localized Ensembles** (`CellForest`, `MultiCellForest`) using quantization-based activation weighting
-- **Secure Symbolic Discovery** via AST parsing (`+`, `-`, `*`, `/`, `**`, unary ops)
-- **NanoCell** for minimal resource usage
-- **trainrate** parameter for fine-grained learning control
-- Additional utilities: `quantization`, `distance_weighted_ratio`, `softsigmoid`
+#### 12. `CellNetwork` — Multi-layer dense network with automated backpropagation
+
+### New in ZevihaNut/2.5
+
+* **Deep Neural Layers** (`CellNetwork`) supporting hidden layers and error distribution.
+* **Localized Ensembles** (`CellForest`, `MultiCellForest`) using quantization-based activation weighting.
+* **Secure Symbolic Discovery** via AST parsing (`+`, `-`, `*`, `/`, `**`, unary ops).
+* **NanoCell** for minimal resource usage.
+* **trainrate** parameter for fine-grained learning control.
+* Additional utilities: `quantization`, `distance_weighted_ratio`, `softsign`.
 
 ### Installation
+
 ```bash
 git clone https://github.com/aertsimon90/Zevihanthosa.git
 cd Zevihanthosa
 # Import zevihanthosa.py directly into your project
+
 ```
+
 No pip install required.
 
 ### Usage Examples
+
 ```python
 from zevihanthosa import *
 import random
@@ -154,9 +182,53 @@ print("MultiCellForest at [0.1, 0.2] →", mcf.process([0.1, 0.2], train=False, 
 print("MultiCellForest at [0.9, 0.8] →", mcf.process([0.9, 0.8], train=False, distance_sharpness=32)[0]) # expected: 0.09220656536782279
 print("MultiCellForest at [0.5, 0.5] →", mcf.process([0.5, 0.5], train=False, distance_sharpness=32)[0]) # expected: 0.4493321321392557
 print("MultiCellForest at [0.0, 1.0] →", mcf.process([0.0, 1.0], train=False, distance_sharpness=32)[0]) # expected: 0.5709155463658065
+
+# 9. CellNetwork – Learning a Continuous Sine Wave Mapping
+# Architecture: 1 input (x) -> 16 hidden neurons -> 1 output (sin(x))
+# We use more hidden neurons to capture the curvature of the wave.
+net_sine = CellNetwork(layers=[1, 16, 1], learning=0.05)
+
+print("Training CellNetwork on Sine Wave...")
+for i in range(150000):
+    # Training range: 0 to 2*PI, normalized to 0-1 for stability
+    x_val = random.random() 
+    # Target: sin(x) mapped from [-1, 1] to [0, 1] range for neural stability
+    target_sin = (math.sin(x_val * math.pi * 2) + 1.0) / 2.0
+    net_sine.process([x_val], target=[target_sin])
+
+# --- Comprehensive Sine Wave Inference & Accuracy Report ---
+test_points = [
+    (0.00, "0°"),      # Expected: 0
+    (0.125, "45°"),    # Expected: 0.707
+    (0.25, "90°"),     # Expected: 1
+    (0.50, "180°"),    # Expected: 0
+    (0.75, "270°"),    # Expected: -1
+    (1.00, "360°")     # Expected: 0
+]
+
+print("--- Zevihanthosa CellNetwork: Sine Wave Accuracy Report ---")
+total_acc = 0
+for x_norm, label in test_points:
+    # Get raw prediction [0, 1]
+    raw_out = net_sine.process([x_norm], train=False)[0]
+    # Map back to [-1, 1]
+    predicted_val = (raw_out * 2.0) - 1.0
+    # Calculate real value
+    actual_val = math.sin(x_norm * math.pi * 2)
+    # Calculate error and accuracy percentage
+    error = abs(actual_val - predicted_val)
+    # Accuracy: 100% minus the error percentage (relative to range 2.0)
+    accuracy = max(0, (1.0 - (error / 2.0)) * 100)
+    total_acc += accuracy
+    
+    print(f"Angle: {label:^5} | Pred: {predicted_val:7.4f} | Real: {actual_val:7.4f} | Error: {error:.6f} | Acc: {accuracy:.2f}%")
+
+print(f"Overall CellNetwork Model Consistency: {(total_acc / len(test_points)):.2f}%")
+
 ```
 
 ### Example Output
+
 ```
 Cell at 0.6 → 0.032449743937126636
 Cell at 0.8 → 0.964736878960268
@@ -173,24 +245,35 @@ Input [0.3, 0.3] → [0.19890884494565178, 0.19886873872368668, 0.19883595155082
 Input [0.5, 0.6] → [0.3542877079200685, 0.3542554262119176, 0.354226395777651]
 Input [1.0, 1.0] → [0.6965192587019245, 0.696553361199306, 0.696575719364518]
 Input [0.2, 0.8] → [0.3173584825325539, 0.31728153453270214, 0.3172141567520689]
-CellForest sin-approx at x=0.1 → 0.9174552098115917
-CellForest sin-approx at x=0.9 → 0.7049073494619554
-MultiCellForest at [0.1, 0.2] → 0.763393326374523
-MultiCellForest at [0.9, 0.8] → 0.1252132058772653
-MultiCellForest at [0.5, 0.5] → 0.4808383345175983
-MultiCellForest at [0.0, 1.0] → 0.5830880594786205
+CellForest sin-approx at x=0.1 → 0.9192891914216803
+CellForest sin-approx at x=0.9 → 0.7069943727992968
+MultiCellForest at [0.1, 0.2] → 0.7596576216489921
+MultiCellForest at [0.9, 0.8] → 0.12025277413180832
+MultiCellForest at [0.5, 0.5] → 0.4806804450111819
+MultiCellForest at [0.0, 1.0] → 0.569294229076006
+Training CellNetwork on Sine Wave...
+--- Zevihanthosa CellNetwork: Sine Wave Accuracy Report ---
+Angle:  0°   | Pred:  0.1127 | Real:  0.0000 | Error: 0.112727 | Acc: 94.36%
+Angle:  45°  | Pred:  0.7041 | Real:  0.7071 | Error: 0.003009 | Acc: 99.85%
+Angle:  90°  | Pred:  0.9719 | Real:  1.0000 | Error: 0.028108 | Acc: 98.59%
+Angle: 180°  | Pred:  0.0287 | Real:  0.0000 | Error: 0.028675 | Acc: 98.57%
+Angle: 270°  | Pred: -0.9440 | Real: -1.0000 | Error: 0.056022 | Acc: 97.20%
+Angle: 360°  | Pred: -0.0792 | Real: -0.0000 | Error: 0.079180 | Acc: 96.04%
+Overall CellNetwork Model Consistency: 97.44%
 ```
 
 ### Why Zevihanthosa?
-- **True Hybrid Intelligence**: Neural + Linear + Memory + Symbolic + Localized Ensembles
-- **Maximum Transparency, Persistence & Interpretability**
-- **Ultra Lightweight & Fully Portable**
-- **Ideal for Education, Research, and Embedded AI**
-- **Extremely Modular** – easy to extend with new cell types
+
+* **True Hybrid Intelligence**: Neural + Linear + Memory + Symbolic + Localized Ensembles + Deep Networks.
+* **Maximum Transparency, Persistence & Interpretability**.
+* **Ultra Lightweight & Fully Portable** (Zero external binary dependencies).
+* **Ideal for Education, Research, and Embedded AI**.
+* **Extremely Modular** – easy to extend with new cell types.
 
 ### License
+
 MIT License — free for any use, commercial or personal.
 
 ---
-**Zevihanthosa — Simplicity meets persistent, interpretable, hybrid intelligence.**  
-*ZevihaNut/2.4 — December 2025: Localized ensembles, secure symbolic regression, and full hybrid maturity. Ready.*
+
+**Zevihanthosa — Simplicity meets persistent, interpretable, hybrid intelligence.** *ZevihaNut/2.5 — January 2026: Deep networks, localized ensembles, and symbolic maturity. Ready.*
