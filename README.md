@@ -96,6 +96,14 @@ All cells support fully **online, incremental learning** with momentum and optio
 > 
 > We are planning a major architectural refactor to invert this logic (routing Forest logic through a consolidated CellNetwork structure) to ensure better generalization. **Until this update is released, the use of MCFN is not recommended for production or critical tasks.** We apologize for this design limitation and are working on a fix.
 
+> [!IMPORTANT]
+> **Technical Note on MCFN Design Flaw:**
+> The current MCFN was built by taking a `CellNetwork` and replacing its internal `MultiInputCell` units with `MultiCellForest` structures. This "inverted architecture" has resulted in a high error rate (approx. 30%) because it disrupts backpropagation and gradient flow.
+> 
+> **Planned Correction:**
+> A future update will rebuild this framework from the ground up by adopting the correct hierarchy: using a `MultiCellForest` as the primary structure and replacing its individual `MultiCell` units with full `CellNetwork` instances. This will ensure localized expertise without sacrificing deep-layer learning stability.
+> 
+
 ---
 
 ### Installation
