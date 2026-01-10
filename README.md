@@ -90,6 +90,12 @@ All cells support fully **online, incremental learning** with momentum and optio
 * **Enhanced Derivatives**: Analytical derivatives for all activations (`s`, `ss`, `t`, `l`, `pl`, `nl`, `sw`, `z`) to improve backpropagation accuracy.
 * **Serialization Fix**: Resolved JSON serialization inconsistencies in MultiCell layers for reliable model persistence.
 
+> [!IMPORTANT]
+> **Developer Note on MultiCellForestNetwork (MCFN):**
+> Currently, the MCFN architecture functions by routing `CellNetwork` logic through `MultiCellForest` structures. Our internal testing has identified that this flow can lead to **significant overfitting issues** in complex tasks. 
+> 
+> We are planning a major architectural refactor to invert this logic (routing Forest logic through a consolidated CellNetwork structure) to ensure better generalization. **Until this update is released, the use of MCFN is not recommended for production or critical tasks.** We apologize for this design limitation and are working on a fix.
+
 ---
 
 ### Installation
