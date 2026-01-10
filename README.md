@@ -86,7 +86,7 @@ All cells support fully **online, incremental learning** with momentum and optio
 * **Swish Activation**: Implementation of `x * sigmoid(x)` normalized for the framework.
 * **Linear Activation Variants**: `plinear` (Positive Linear) and `nlinear` (Negative Linear) for directional rectifying behavior.
 * **Overflow Protection**: Activation functions now gracefully handle extreme values to maintain training stability.
-* **Multi-Layer Forest**: `MultiCellForestNetwork` (MCFN) for high-dimensional, localized deep learning. (Currently, a backpropagation error has been discovered within this feature. If it cannot be fixed, this feature may be removed)
+* **Multi-Layer Forest Network**: `MultiCellForestNetwork` (MCFN) for high-dimensional, localized deep learning. (Currently, a backpropagation error has been discovered within this feature. If it cannot be fixed, this feature may be removed)
 * **Enhanced Derivatives**: Analytical derivatives for all activations (`s`, `ss`, `t`, `l`, `pl`, `nl`, `sw`, `z`) to improve backpropagation accuracy.
 * **Serialization Fix**: Resolved JSON serialization inconsistencies in MultiCell layers for reliable model persistence.
 
