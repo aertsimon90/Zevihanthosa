@@ -1,7 +1,7 @@
 # Zevihanthosa - Advanced Artificial Intelligence Framework
 ![ZevihaNut Logo](ZevihaNut.png)
 
-## ZevihaNut/2.5 Model (Latest Release - January 2026)
+## ZevihaNut/2.6 Model (Latest Release - January 2026)
 
 *A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, localized ensembles, and **Deep Multi-Layer Networks** — with complete serialization and enhanced numerical stability.*
 
@@ -9,14 +9,17 @@
 
 **Zevihanthosa** is a minimalist, powerful, and highly extensible artificial intelligence framework designed for experimentation, education, and rapid prototyping of transparent, persistent, and hybrid intelligent systems.
 
-The **ZevihaNut/2.5** release (January 2026) brings significant advancements:
+The **ZevihaNut/2.6** release (January 2026) brings significant advancements:
 
-* **New Deep Learning Engine**: `CellNetwork` provides a full backpropagation framework for multi-layer architectures.
+* **New Deep Learning Engine**: `MultiCellForestNetwork` (MCFN) provides a localized full dense ensemble Deep Multi-Layer Backpropagation framework.
+* **Modern Activations**: Added **Swish**, **Positive Linear**, and **Negative Linear** methods.
+* **Precise Derivatives**: Custom derivation functions added for every activation type to ensure accurate backpropagation gradients.
+* **Numerical Safety**: Robust overflow handling in activation functions to prevent `math.exp` errors.
 * New **localized ensemble cells**: `CellForest` and `MultiCellForest` for smoother, more robust function approximation.
 * Ultra-lightweight **NanoCell** (momentum-free perceptron).
 * Secure **FuncCell** using AST-based expression evaluation (no unsafe `eval`).
 * Enhanced numerical tools: quantization, softsigmoid, trainrate modulation, safer division.
-* Full JSON serialization for **all 12 cell types** (0–11).
+* Full JSON serialization for **all 13 cell types** (0–12).
 * Improved `DataCell` with better averaging and fallback logic.
 * Weight initialization centered in `[-1, 1]` for faster convergence.
 
@@ -29,9 +32,10 @@ All cells support fully **online, incremental learning** with momentum and optio
 * **Deep Hierarchical Learning** – full backpropagation through arbitrary layers.
 * **Momentum Optimization** (default 0.9).
 * **Automatic Weight/Bias Clamping**.
-* **Flexible Activations** – sigmoid, softsigmoid, tanh, ReLU, linear, custom zevian.
+* **Flexible Activations** – sigmoid, softsign, tanh, Swish, Positive/Negative Linear, custom zevian.
 * **Complete Model Persistence** – save/load/copy any cell or network to/from JSON.
-* **12 Learning Paradigms**:
+* **13 Learning Paradigms**:
+
 1. Classic momentum-optimized neuron (`Cell`)
 2. Additive linear unit (`LinearSumCell`)
 3. Multiplicative linear unit (`LinearMulCell`)
@@ -43,8 +47,8 @@ All cells support fully **online, incremental learning** with momentum and optio
 9. Minimal perceptron without momentum (`NanoCell`)
 10. Localized single-input ensemble (`CellForest`)
 11. Localized full dense ensemble (`MultiCellForest`)
-12. **Deep Multi-Layer Backpropagation Network** (`CellNetwork`)
-
+12. Deep Multi-Layer Backpropagation Network (`CellNetwork`)
+13. **Localized Full Dense Ensemble Deep Multi-Layer Backpropagation Network** (`MultiCellForestNetwork`)
 
 * **High Interpretability** – readable symbolic formulas and persistent states.
 * **Robust Scaling & Quantization Tools**.
@@ -75,14 +79,18 @@ All cells support fully **online, incremental learning** with momentum and optio
 
 #### 12. `CellNetwork` — Multi-layer dense network with automated backpropagation
 
-### New in ZevihaNut/2.5
+#### 13. `MultiCellForestNetwork` — MCFN combines the localized intelligence of `MultiCellForest` with the depth of `CellNetwork`.
 
-* **Deep Neural Layers** (`CellNetwork`) supporting hidden layers and error distribution.
-* **Localized Ensembles** (`CellForest`, `MultiCellForest`) using quantization-based activation weighting.
-* **Secure Symbolic Discovery** via AST parsing (`+`, `-`, `*`, `/`, `**`, unary ops).
-* **NanoCell** for minimal resource usage.
-* **trainrate** parameter for fine-grained learning control.
-* Additional utilities: `quantization`, `distance_weighted_ratio`, `softsign`.
+### New in ZevihaNut/2.6
+
+* **Swish Activation**: Implementation of `x * sigmoid(x)` normalized for the framework.
+* **Linear Activation Variants**: `plinear` (Positive Linear) and `nlinear` (Negative Linear) for directional rectifying behavior.
+* **Overflow Protection**: Activation functions now gracefully handle extreme values to maintain training stability.
+* **Multi-Layer Forest**: `MultiCellForestNetwork` (MCFN) for high-dimensional, localized deep learning. (Currently, a backpropagation error has been discovered within this feature. If it cannot be fixed, this feature may be removed)
+* **Enhanced Derivatives**: Analytical derivatives for all activations (`s`, `ss`, `t`, `l`, `pl`, `nl`, `sw`, `z`) to improve backpropagation accuracy.
+* **Serialization Fix**: Resolved JSON serialization inconsistencies in MultiCell layers for reliable model persistence.
+
+---
 
 ### Installation
 
@@ -225,6 +233,8 @@ for x_norm, label in test_points:
 
 print(f"Overall CellNetwork Model Consistency: {(total_acc / len(test_points)):.2f}%")
 
+# Why MultiCellForestNetwork not have a example code? Currently, a backpropagation error has been discovered within this feature. If it cannot be fixed, this feature may be removed.
+
 ```
 
 ### Example Output
@@ -276,4 +286,5 @@ MIT License — free for any use, commercial or personal.
 
 ---
 
-**Zevihanthosa — Simplicity meets persistent, interpretable, hybrid intelligence.** *ZevihaNut/2.5 — January 2026: Deep networks, localized ensembles, and symbolic maturity. Ready.*
+**Zevihanthosa — Simplicity meets persistent, interpretable, hybrid intelligence.**
+*ZevihaNut/2.6 — January 2026: Deep networks, localized ensembles, and symbolic maturity. Ready.*
