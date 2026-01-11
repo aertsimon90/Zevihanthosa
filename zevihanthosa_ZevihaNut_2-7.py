@@ -716,18 +716,14 @@ class MultiCellForest:
             self.cells[i].activation = obj
         self.activation = obj
     def get_target_cells(self, inp, distance_sharpness=8, top_k=4):
-        scores = [0.0] * self.cellscount
-        for single_inp in inp:
-            inpr = quantization_point(single_inp, sensitivity=self.cellscount)
-            for i in range(self.cellscount):
-                seq = 1 - (abs(i - inpr) / self.cellscount)
-                rat = distance_weighted_ratio(seq, sharpness=distance_sharpness)
-                scores[i] += rat
+        inp = sum(inp)/len(inp)
         cells = []
-        for i, total_score in enumerate(scores):
-            if total_score > 0:
-                avg_score = total_score / len(inp)
-                cells.append([self.cells[i], avg_score])
+        inpr = quantization_point(inp, sensitivity=self.cellscount)
+        for i in range(self.cellscount):
+            seq = 1-(abs(i-inpr)/self.cellscount)
+            rat = distance_weighted_ratio(seq, sharpness=distance_sharpness)
+            if rat > 0:
+                cells.append([self.cells[i], rat])
         cells.sort(key=lambda x: x[1], reverse=True)
         return cells[:top_k]
     def process(self, input, target=None, train=True, trainrate=1, perceptron=False, distance_sharpness=8, top_k=4, pointweight=True):
@@ -847,6 +843,20 @@ class CellNetworkForest:
                 norm_score = total_score / len(inp)
                 result.append([self.networks[idx], norm_score])
         return result
+    def get_target_networks(self, inp, distance_sharpness=8, top_k=4):
+        inp = sum(inp)/len(inp)
+        ns = []
+        inpr = quantization_point(inp, sensitivity=self.networkcount)
+        for i in range(self.networkcount):
+            seq = 1-(abs(i-inpr)/self.networkcount)
+            rat = distance_weighted_ratio(seq, sharpness=distance_sharpness)
+            if rat > 0:
+                ns.append([self.networks[i], rat])
+        aggregated = defaultdict(float)
+        for idx, score in ns:
+            aggregated[idx] += score
+        ns = sorted(aggregated.items(), key=lambda x: x[1], reverse=True)
+        return ns[:top_k]
     def process(self, input, target=None, train=True, trainrate=1, perceptron=False, distance_sharpness=8, top_k=4, pointweight=True):
         results = []
         main = [0.5]*self.layers[-1]
