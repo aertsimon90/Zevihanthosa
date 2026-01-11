@@ -81,23 +81,31 @@ All cells support fully **online, incremental learning** with momentum and optio
 
 > [!NOTE]
 > **Resolution of MCFN Issues:**
+>
 > The previous `MultiCellForestNetwork` (MCFN) suffered from architectural inversion, leading to disrupted gradients and overfitting. This has been fully resolved in 2.7 with `CellNetworkForest` (CNF), which correctly hierarchies full deep networks within a localized ensemble framework. Internal benchmarks show 15–25% better generalization on high-dimensional tasks (e.g., XOR variants, sine wave regression). CNF is now production-ready and recommended for complex, localized deep learning applications.
 
-> [!WARNING]
-> Current Limitations in CellNetworkForest (CNF) – Multi-Dimensional Input Handling
-> While CNF demonstrates excellent performance on single-input tasks (error rates typically <5%), it can exhibit significantly higher error rates (20–50% or more) when dealing with multi-dimensional inputs (e.g., 2+ features).
-> Root Cause:
-> The current get_target_networks function aggregates relevance scores by averaging the quantized position across all input dimensions. This simple averaging often fails to capture the true multi-dimensional structure of the data, causing inappropriate network selection — especially in tasks where different input features have non-uniform importance or interact in complex ways.
-> Planned Architectural Improvements (Future Releases):
-> Per-dimension network indexing: Each input dimension will have its own independent quantization → selection layer, allowing the forest to better distinguish specialized networks for different feature subspaces.
-> Multi-layer forest hierarchy: Instead of applying localization only at the top level, we plan to introduce network specialization across multiple layers of the forest (not just a single routing step).
-> Feature-aware routing: Networks will be able to adapt their internal architecture (or routing weights) based on the number of input dimensions, enabling true multi-dimensional expertise.
-> Trade-offs:
-> This new design will be significantly more computationally intensive and memory demanding, potentially challenging even modern hardware when using large network counts or deep layers. However, it is currently considered the most promising path to achieve robust, low-error performance on high-dimensional, complex tasks.
-> Until these improvements are implemented, we strongly recommend:
-> Using CNF primarily for single-input or low-dimensional problems
-> For multi-dimensional tasks, consider falling back to MultiCellForest (which handles vector inputs more reliably in the current version) or classical CellNetwork with manual feature engineering.
-> We apologize for this current limitation and are actively working on a more sophisticated, dimension-aware forest architecture to fully unlock CNF's potential.Thank you for your understanding — this is a critical area of ongoing development in Zevihanthosa 2.7+.
+> [!WARNING]  
+> **Current Limitations in CellNetworkForest (CNF) – Multi-Dimensional Input Handling**  
+> 
+> While CNF demonstrates excellent performance on **single-input** tasks (error rates typically <5%), it can exhibit significantly higher error rates (20–50% or more) when dealing with **multi-dimensional inputs** (e.g., 2+ features).  
+> 
+> **Root Cause:**  
+> The current `get_target_networks` function aggregates relevance scores by averaging the quantized position across all input dimensions. This simple averaging often fails to capture the true multi-dimensional structure of the data, causing inappropriate network selection — especially in tasks where different input features have non-uniform importance or interact in complex ways.  
+> 
+> **Planned Architectural Improvements (Future Releases):**  
+> - Per-dimension network indexing: Each input dimension will have its own independent quantization → selection layer...  
+> - Multi-layer forest hierarchy: Instead of applying localization only at the top level...  
+> - Feature-aware routing: Networks will be able to adapt their internal architecture...  
+> 
+> **Trade-offs:**  
+> This new design will be significantly more computationally intensive and memory demanding...  
+> 
+> Until these improvements are implemented, we strongly recommend:  
+> - Using CNF primarily for **single-input** or **low-dimensional** problems  
+> - For multi-dimensional tasks, consider falling back to `MultiCellForest`...  
+> 
+> We apologize for this current limitation and are actively working on a more sophisticated, dimension-aware forest architecture...  
+> Thank you for your understanding — this is a critical area of ongoing development in Zevihanthosa 2.7+.
 
 ---
 
