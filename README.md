@@ -46,18 +46,31 @@ All components continue to support **online** and **incremental learning** with 
 
 ### Core Components
 #### 1. `Cell` — Classic Momentum-Optimized Neuron
+![image](images/image1.png)
 #### 2. `LinearSumCell` — `output = activation(input + bias)`
+![image](images/image2.png)
 #### 3. `LinearMulCell` — `output = activation(input * weight)`
+![image](images/image3.png)
 #### 4. `DataCell` — Distance-weighted memory-based prediction
+![image](images/image4.png)
 #### 5. `MultiInputCell` — Multiple inputs → single output
+![image](images/image5.png)
 #### 6. `MultiOutputCell` — Single input → multiple outputs
+![image](images/image6.png)
 #### 7. `MultiCell` — Full arbitrary dense layer
+![image](images/image7.png)
 #### 8. `FuncCell` — Safe symbolic regression (bounded arithmetic expressions)
+![image](images/image8.png)
 #### 9. `NanoCell` — Lightweight perceptron (no momentum)
+![image](images/image9.png)
 #### 10. `CellForest` — Distance-weighted ensemble of `Cell`s with center-aware localization & top_k selection
+![image](images/image10.png)
 #### 11. `MultiCellForest` — **Massive** ensemble of `MultiCell`s (cellscount**icount experts), cluster-compressed routing, anchor blending
+![image](images/image11.png)
 #### 12. `CellNetwork` — Multi-layer dense network with automated backpropagation and per-layer activations
+![image](images/image12.png)
 #### 13. `CellNetworkForest` — **Massive** ensemble of `CellNetwork`s (networkcount**input_size experts), cluster-compressed multi-dimensional routing, anchor blending
+![image](images/image13.png)
 
 ### New in ZevihaNut/2.8
 
