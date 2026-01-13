@@ -48,29 +48,29 @@ All components continue to support **online** and **incremental learning** with 
 #### 1. `Cell` — Classic Momentum-Optimized Neuron
 <img src="images/image1.png" width="600" height="400">
 #### 2. `LinearSumCell` — `output = activation(input + bias)`
-![image](images/image2.png)
+<img src="images/image2.png" width="600" height="400">
 #### 3. `LinearMulCell` — `output = activation(input * weight)`
-![image](images/image3.png)
+<img src="images/image3.png" width="600" height="400">
 #### 4. `DataCell` — Distance-weighted memory-based prediction
-![image](images/image4.png)
+<img src="images/image4.png" width="600" height="400">
 #### 5. `MultiInputCell` — Multiple inputs → single output
-![image](images/image5.png)
+<img src="images/image5.png" width="600" height="400">
 #### 6. `MultiOutputCell` — Single input → multiple outputs
-![image](images/image6.png)
+<img src="images/image6.png" width="600" height="400">
 #### 7. `MultiCell` — Full arbitrary dense layer
-![image](images/image7.png)
+<img src="images/image7.png" width="600" height="400">
 #### 8. `FuncCell` — Safe symbolic regression (bounded arithmetic expressions)
-![image](images/image8.png)
+<img src="images/image8.png" width="600" height="400">
 #### 9. `NanoCell` — Lightweight perceptron (no momentum)
-![image](images/image9.png)
+<img src="images/image9.png" width="600" height="400">
 #### 10. `CellForest` — Distance-weighted ensemble of `Cell`s with center-aware localization & top_k selection
-![image](images/image10.png)
+<img src="images/image10.png" width="600" height="400">
 #### 11. `MultiCellForest` — **Localized** ensemble of `MultiCell`s
-![image](images/image11.png)
+<img src="images/image11.png" width="600" height="400">
 #### 12. `CellNetwork` — Multi-layer dense network with automated backpropagation and per-layer activations
-![image](images/image12.png)
+<img src="images/image12.png" width="600" height="400">
 #### 13. `CellNetworkForest` — **Localized** ensemble of `CellNetwork`s
-![image](images/image13.png)
+<img src="images/image13.png" width="600" height="400">
 
 ### New in ZevihaNut/2.8
 
