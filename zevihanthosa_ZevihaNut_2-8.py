@@ -85,18 +85,20 @@ def clustmin(x, k=32):
         return quantization(x, sensitivity=k)
 def clustmax(x, k=32):
     return min(clustmin(x)+(1/(k/2)), 1)
-def squeezeforclust(values, k=32):
-    n = len(values)
-    s = sum(values)
-    if s == 0:
-        return 0.0
-    if s == n:
-        return 1.0
+def sfcmx(valuec, k=32):
+    values = valuec*[1]
     val = clustmin(values[0])
     for i, value in enumerate(values[1:]):
         value = clustmax(value)
         val += value/(k**(i+1))
     return val
+def squeezeforclust(values, k=32):
+    n = len(values)
+    val = clustmin(values[0])
+    for i, value in enumerate(values[1:]):
+        value = clustmax(value)
+        val += value/(k**(i+1))
+    return val/sfcmx(n,k=k)
 
 # Activation Methods (They all produce an output between 0 and 1)
 class Activation:
@@ -690,22 +692,20 @@ class CellForest:
         for i in range(self.cellscount):
             self.cells[i].activation = obj
         self.activation = obj
-    def get_target_cells(self, inp, distance_sharpness=8, top_k=4):
+    def get_target_cells(self, inp, top_k=4):
         inp = max(min(inp, 1), 0)
         cells = []
         inpr = inp*self.cellscount
         for i in range(self.cellscount):
             seq = 1-(abs((i+0.5)-inpr)/self.cellscount)
-            rat = distance_weighted_ratio(seq, sharpness=distance_sharpness)
-            if rat > 0:
-                cells.append([self.cells[i], rat])
+            cells.append([self.cells[i], seq])
         cells.sort(key=lambda x: x[1], reverse=True)
         cells = cells[:top_k]
-        return cells
-    def process(self, input, target=None, train=True, trainrate=1, perceptron=False, distance_sharpness=8, top_k=4, pointweight=True):
+        return [[cell[0], 1-(i/len(cells))] for i, cell in enumerate(cells)]
+    def process(self, input, target=None, train=True, trainrate=1, perceptron=False, top_k=4, pointweight=True):
         results = []
         main = 0.5
-        cells = self.get_target_cells(input, distance_sharpness=distance_sharpness, top_k=top_k)
+        cells = self.get_target_cells(input, top_k=top_k)
         best_cell = cells[0][0]
         for cell in cells:
             result = cell[0].process(input, target=target, train=train, trainrate=trainrate*cell[1], perceptron=perceptron)
@@ -737,23 +737,21 @@ class MultiCellForest:
         for i in range(len(self.cells)):
             self.cells[i].activation = obj
         self.activation = obj
-    def get_target_cells(self, inp, distance_sharpness=8, top_k=4, clusters=32):
+    def get_target_cells(self, inp, top_k=4, clusters=32):
         inp = squeezeforclust(inp, k=clusters)
         cells = []
         cellscount = len(self.cells)
         inpr = inp*cellscount
         for i in range(cellscount):
             seq = 1-(abs((i+0.5)-inpr)/cellscount)
-            rat = distance_weighted_ratio(seq, sharpness=distance_sharpness)
-            if rat > 0:
-                cells.append([self.cells[i], rat])
+            cells.append([self.cells[i], seq])
         cells.sort(key=lambda x: x[1], reverse=True)
         cells = cells[:top_k]
-        return cells
-    def process(self, input, target=None, train=True, trainrate=1, perceptron=False, distance_sharpness=8, top_k=4, clusters=32, pointweight=True):
+        return [[cell[0], 1-(i/len(cells))] for i, cell in enumerate(cells)]
+    def process(self, input, target=None, train=True, trainrate=1, perceptron=False, top_k=4, clusters=32, pointweight=True):
         results = []
         main = [0.5]*self.ocount
-        cells = self.get_target_cells(input, distance_sharpness=distance_sharpness, top_k=top_k, clusters=clusters)
+        cells = self.get_target_cells(input, top_k=top_k, clusters=clusters)
         best_cell = cells[0][0]
         for cell in cells:
             result = cell[0].process(input, target=target, train=train, trainrate=trainrate*cell[1], perceptron=perceptron)
@@ -850,23 +848,21 @@ class CellNetworkForest:
         for i in range(len(self.networks)):
             self.networks[i].update_activations(objs)
         self.activations = objs
-    def get_target_networks(self, inp, distance_sharpness=8, top_k=4, clusters=32):
+    def get_target_networks(self, inp, top_k=4, clusters=32):
         inp = squeezeforclust(inp, k=clusters)
         ns = []
         networkcount = len(self.networks)
         inpr = inp*networkcount
         for i in range(networkcount):
             seq = 1-(abs((i+0.5)-inpr)/networkcount)
-            rat = distance_weighted_ratio(seq, sharpness=distance_sharpness)
-            if rat > 0:
-                ns.append([self.networks[i], rat])
+            ns.append([self.networks[i], seq])
         ns.sort(key=lambda x: x[1], reverse=True)
         ns = ns[:top_k]
-        return ns
-    def process(self, input, target=None, train=True, trainrate=1, perceptron=False, distance_sharpness=8, top_k=4, clusters=32, pointweight=True):
+        return [[n[0], 1-(i/len(ns))] for i, n in enumerate(ns)]
+    def process(self, input, target=None, train=True, trainrate=1, perceptron=False, top_k=4, clusters=32, pointweight=True):
         results = []
         main = [0.5]*self.layers[-1]
-        ns = self.get_target_networks(input, distance_sharpness=distance_sharpness, top_k=top_k, clusters=clusters)
+        ns = self.get_target_networks(input, top_k=top_k, clusters=clusters)
         best_network = ns[0][0]
         for network in ns:
             result = network[0].process(input, target=target, train=train, trainrate=trainrate*network[1], perceptron=perceptron)
