@@ -316,7 +316,7 @@ Overall CNF (Network Forest) Consistency: 96.33%
 ```
 
 ## Why Zevihanthosa?
-* **True Hybrid Intelligence**: Neural + Linear + Memory + Symbolic + Massively Scaled Localized Ensembles + Deep Networks + Multi-Layer Networks.
+* **True Hybrid Intelligence**: Neural + Linear + Memory + Symbolic + Deep Scaled Localized Ensembles + Deep Networks + Multi-Layer Networks.
 * **Maximum Transparency, Persistence & Interpretability**.
 * **Ultra Lightweight & Fully Portable** (Zero external binary dependencies).
 * **Ideal for Education, Research, Embedded AI, and Extreme Specialization Experiments**.
@@ -328,4 +328,4 @@ MIT License — free for any use, commercial or personal.
 ---
 **Zevihanthosa — Simplicity meets persistent, interpretable, hybrid intelligence.**
 
-*ZevihaNut/2.8 — January 2026: Massive expert scaling, aggressive input compression, anchor blending, and thousands of hyper-specialized units. Specialization taken to the extreme. Ready.*
+*ZevihaNut/2.8 — January 2026: Expert scaling, input compression, anchor blending, and hyper-specialized units. expert form of specialization. Ready.*
