@@ -1,55 +1,48 @@
 # Zevihanthosa - Advanced Artificial Intelligence Framework
 ![ZevihaNut Logo](ZevihaNut.png)
 
-## ZevihaNut/2.7 Model (Latest Release - January 2026)
-*A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, localized ensembles, and **Deep Multi-Layer Networks** — with complete serialization, enhanced numerical stability, and now fully stabilized deep forest architectures.*
+## ZevihaNut/2.8 Model (Latest Release - January 2026)
+*A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, massively scaled localized ensembles, and **Deep Multi-Layer Networks** — with complete serialization, enhanced numerical stability, aggressive input compression, and dramatically expanded expert pools.*
 
 ### Overview
 **Zevihanthosa** is a minimalist, powerful, and highly extensible artificial intelligence framework designed for experimentation, education, and rapid prototyping of transparent, persistent, and hybrid intelligent systems.
 
-The **ZevihaNut/2.7** release (January 2026) delivers critical stability improvements and architectural refinements:
-* **Stabilized Deep Forest Engine**: `MultiCellForestNetwork` (MCFN) has been removed due to persistent overfitting and backpropagation issues. In its place, the new **`CellNetworkForest` (CNF)** introduces a robust, correctly hierarchical localized ensemble of full deep networks for superior generalization.
-* **Layer-Wise Activation Flexibility**: `CellNetwork` and `CellNetworkForest` now support per-layer activation configurations (e.g., Swish in hidden layers, linear in output).
-* **Top-K Localization Precision**: All forest structures (`CellForest`, `MultiCellForest`, `CellNetworkForest`) now use configurable `top_k` selection for sharper, more efficient neighbor routing (default: 4).
-* **Multi-Dimensional Scoring**: Enhanced input handling in `MultiCellForest` and `CellNetworkForest` for vectorized quantization and aggregated relevance scoring.
-* **Modern Activations**: Retained and refined **Swish**, **Positive Linear**, and **Negative Linear** methods with improved derivative accuracy.
-* **Precise Derivatives**: Custom derivation functions for every activation type ensure reliable backpropagation gradients.
-* **Numerical Safety**: Robust overflow handling in activation functions to prevent `math.exp` errors.
-* **New Utility Class**: `DivideCluster` for preliminary data clustering (future integration planned for adaptive partitioning).
-* Localized ensemble cells: `CellForest` and `MultiCellForest` for smoother, more robust function approximation.
-* Ultra-lightweight **NanoCell** (momentum-free perceptron).
-* Secure **FuncCell** using AST-based expression evaluation (no unsafe `eval`).
-* Enhanced numerical tools: quantization, softsigmoid, trainrate modulation, safer division.
-* Full JSON serialization for **all 13 cell types** (0–12).
-* Improved `DataCell` with better averaging and fallback logic.
-* Weight initialization centered in `[-1, 1]` for faster convergence.
+The **ZevihaNut/2.8** release (January 2026) introduces a major shift toward **massively parallel localized specialization** with the following key advancements:
 
-All cells support fully **online, incremental learning** with momentum and optional perceptron mode. Only minimal dependencies required.
+- **Aggressive Input Compression** — New `squeezeforclust` mechanism for extremely compact multi-dimensional coordinate encoding  
+- **Massive Expert Scaling** — `MultiCellForest` now creates `cellscount ** input_count` cells, `CellNetworkForest` uses `networkcount ** input_layer_size` networks  
+- **Anchor-based Ensemble Blending** — The most relevant (best) unit/network now has significantly stronger influence on the final output  
+- **Center-aware Localization** — Floating-point indexing with cell/network center offset `(i+0.5)` for smoother relevance gradients  
+- **Cluster-aware Routing** — `clustmin`/`clustmax` + `squeezeforclust` for sharper and more stable multi-dimensional target selection  
+- Retained all stability & flexibility improvements from 2.7
+
+All cells continue to support fully **online, incremental learning** with momentum and optional perceptron mode. Only minimal dependencies required.
 
 ### Key Features
-* **Pure Python & Minimal Dependencies** (`random`, `math`, `json`, `ast`)
-* **Fully Online Learning** – instant adaptation per sample.
-* **Deep Hierarchical Learning** – full backpropagation through arbitrary layers.
-* **Momentum Optimization** (default 0.9).
-* **Automatic Weight/Bias Clamping**.
-* **Flexible Activations** – sigmoid, softsign, tanh, Swish, Positive/Negative Linear, custom zevian.
-* **Complete Model Persistence** – save/load/copy any cell or network to/from JSON.
-* **13 Learning Paradigms**:
-1. Classic momentum-optimized neuron (`Cell`)
-2. Additive linear unit (`LinearSumCell`)
-3. Multiplicative linear unit (`LinearMulCell`)
-4. Instance-based memory regressor (`DataCell`)
-5. Multi-input fusion neuron (`MultiInputCell`)
-6. Parallel multi-output neuron (`MultiOutputCell`)
-7. Full dense layer (multi-in → multi-out) (`MultiCell`)
-8. Symbolic regression with safe AST evaluation (`FuncCell`)
-9. Minimal perceptron without momentum (`NanoCell`)
-10. Localized single-input ensemble (`CellForest`)
-11. Localized full dense ensemble (`MultiCellForest`)
-12. Deep Multi-Layer Backpropagation Network (`CellNetwork`)
-13. **Localized Ensemble of Deep Multi-Layer Backpropagation Networks** (`CellNetworkForest`)
-* **High Interpretability** – readable symbolic formulas and persistent states.
-* **Robust Scaling & Quantization Tools**.
+- **Pure Python & Minimal Dependencies** (`random`, `math`, `json`, `ast`)
+- **Fully Online Learning** – instant adaptation per sample
+- **Deep Hierarchical Learning** – full backpropagation through arbitrary layers
+- **Momentum Optimization** (default 0.9)
+- **Automatic Weight/Bias Clamping**
+- **Flexible Activations** – sigmoid, softsign, tanh, Swish, Positive/Negative Linear, custom zevian
+- **Complete Model Persistence** – save/load/copy any cell or network to/from JSON
+- **13 Learning Paradigms**:
+  1. Classic momentum-optimized neuron (`Cell`)
+  2. Additive linear unit (`LinearSumCell`)
+  3. Multiplicative linear unit (`LinearMulCell`)
+  4. Instance-based memory regressor (`DataCell`)
+  5. Multi-input fusion neuron (`MultiInputCell`)
+  6. Parallel multi-output neuron (`MultiOutputCell`)
+  7. Full dense layer (multi-in → multi-out) (`MultiCell`)
+  8. Symbolic regression with safe AST evaluation (`FuncCell`)
+  9. Minimal perceptron without momentum (`NanoCell`)
+  10. Localized single-input ensemble (`CellForest`)
+  11. **Massively scaled localized full dense ensemble** (`MultiCellForest`)
+  12. Deep Multi-Layer Backpropagation Network (`CellNetwork`)
+  13. **Massively scaled localized ensemble of deep multi-layer networks** (`CellNetworkForest`)
+
+- **High Interpretability** – readable symbolic formulas and persistent states
+- **Robust Scaling & Aggressive Quantization/Compression Tools**
 
 ### Core Components
 #### 1. `Cell` — Classic Momentum-Optimized Neuron
@@ -61,51 +54,45 @@ All cells support fully **online, incremental learning** with momentum and optio
 #### 7. `MultiCell` — Full arbitrary dense layer
 #### 8. `FuncCell` — Safe symbolic regression (bounded arithmetic expressions)
 #### 9. `NanoCell` — Lightweight perceptron (no momentum)
-#### 10. `CellForest` — Distance-weighted ensemble of `Cell`s (localized learning) with `top_k` neighbor selection
-#### 11. `MultiCellForest` — Ensemble of `MultiCell`s for robust multi-dimensional mapping, now with vectorized scoring and `top_k`
+#### 10. `CellForest` — Distance-weighted ensemble of `Cell`s with center-aware localization & top_k selection
+#### 11. `MultiCellForest` — **Massive** ensemble of `MultiCell`s (cellscount**icount experts), cluster-compressed routing, anchor blending
 #### 12. `CellNetwork` — Multi-layer dense network with automated backpropagation and per-layer activations
-#### 13. `CellNetworkForest` — CNF ensembles multiple `CellNetwork` instances with localized routing, `top_k` selection, and multi-dimensional input scoring for stable, high-generalization deep learning.
+#### 13. `CellNetworkForest` — **Massive** ensemble of `CellNetwork`s (networkcount**input_size experts), cluster-compressed multi-dimensional routing, anchor blending
 
-### New in ZevihaNut/2.7
-* **CellNetworkForest (CNF) Introduction**: Replaces the flawed `MultiCellForestNetwork` (MCFN) with a properly architected ensemble of full deep networks. Each network in the forest specializes in localized input regions via quantization-based routing, ensuring smooth gradient flow and reduced overfitting (tested <5% error on complex benchmarks).
-* **Top-K Neighbor Selection**: Forests now prioritize only the top `k` (default 4) most relevant units/networks, improving efficiency, sharpness, and training speed by 20–30% while minimizing noise from distant matches.
-* **Multi-Dimensional Input Scoring**: `MultiCellForest` and `CellNetworkForest` now aggregate relevance scores across all input dimensions for more accurate, vector-aware localization.
-* **Per-Layer Activations**: `CellNetwork` accepts an `activations` list (e.g., `["sw", "t", "l"]`) to mix activation types across layers, enabling tailored architectures like Swish for hidden layers and linear for outputs.
-* **DivideCluster Utility**: New class for simple k-means-like data partitioning (e.g., `DivideCluster(data, count=16)`), laying groundwork for adaptive clustering in future releases.
-* **Swish Activation Refinements**: Scaled derivative (factor 0.165) for better numerical stability in deep networks.
-* **Linear Activation Variants**: Retained `plinear` (Positive Linear) and `nlinear` (Negative Linear) with edge-case derivative clamping.
-* **Overflow Protection**: Activation functions now gracefully handle extreme values to maintain training stability.
-* **Enhanced Derivatives**: Analytical derivatives for all activations (`s`, `ss`, `t`, `l`, `pl`, `nl`, `sw`, `z`) to improve backpropagation accuracy.
-* **Serialization Optimizations**: Streamlined keys (e.g., `"cells"` → `"cs"`) for faster JSON handling in large forests/networks.
-* **Backpropagation Stability**: Full audit and fixes in `CellNetwork` and forest backprop to ensure consistent error propagation.
+### New in ZevihaNut/2.8
+- **squeezeforclust** — New aggressive multi-dimensional input compression & quantization method for forest routing
+- **Massive Expert Pool Scaling**  
+  • `MultiCellForest`: now spawns `cellscount ** input_count` independent `MultiCell` instances  
+  • `CellNetworkForest`: now spawns `networkcount ** first_layer_size` complete deep networks
+- **Anchor Blending** — Most relevant expert/network (highest relevance score) now acts as a strong "anchor" and receives extra weight in final output mixing
+- **Center-aware Index Calculation** — `(i + 0.5)` centering in relevance computation → smoother transitions between experts
+- **clustmin / clustmax** — Specialized min/max-aware clamping for compression-aware quantization
+- **Improved Forest Routing** — All multi-dimensional forests now use `squeezeforclust` instead of simple averaging → better handling of structured multi-feature inputs
+- **Top-K + Anchor Synergy** — Combination of limited top-k selection + strong anchor influence improves both efficiency and output quality
 
-> [!NOTE]
-> **Resolution of MCFN Issues:**
->
-> The previous `MultiCellForestNetwork` (MCFN) suffered from architectural inversion, leading to disrupted gradients and overfitting. This has been fully resolved in 2.7 with `CellNetworkForest` (CNF), which correctly hierarchies full deep networks within a localized ensemble framework. Internal benchmarks show 15–25% better generalization on high-dimensional tasks (e.g., XOR variants, sine wave regression). CNF is now production-ready and recommended for complex, localized deep learning applications.
+> [!NOTE]  
+> **2.8 Philosophy**  
+> ZevihaNut/2.8 moves decisively toward the "thousands of highly specialized experts" paradigm.  
+> Instead of trying to make one forest better at everything, we massively increase the number of experts and use very aggressive compression + anchor blending to route inputs to the most relevant specialists.  
+> Early tests show significantly sharper local approximation behavior, especially on functions with many different regimes.
 
 > [!WARNING]  
-> **Current Limitations in CellNetworkForest (CNF) – Multi-Dimensional Input Handling**  
+> **Current Trade-offs & Limitations in 2.8**  
 > 
-> While CNF demonstrates excellent performance on **single-input** tasks (error rates typically <5%), it can exhibit significantly higher error rates (20–50% or more) when dealing with **multi-dimensional inputs** (e.g., 2+ features).  
+> - Memory consumption grows **exponentially** with input dimensionality  
+>   → `MultiCellForest` with 64 cells and 4 inputs = **16 million** cells (!)
+> - Training time increases dramatically with expert count  
+> - Still sensitive to proper tuning of `distance_sharpness`, `top_k`, and `clusters` parameters  
+> - Multi-dimensional routing quality, while improved, remains heuristic-based  
 > 
-> **Root Cause:**  
-> The current `get_target_networks` function aggregates relevance scores by averaging the quantized position across all input dimensions. This simple averaging often fails to capture the true multi-dimensional structure of the data, causing inappropriate network selection — especially in tasks where different input features have non-uniform importance or interact in complex ways.  
+> **Recommended usage patterns (2.8):**
+> - Single-input or very low-dimensional problems → full power of massive scaling  
+> - Medium dimensionality (2–4 inputs) → carefully tune `cellscount`/`networkcount` (16–64 range most practical)  
+> - High-dimensional problems → consider dimensionality reduction first or wait for future hierarchical routing improvements
 > 
-> **Planned Architectural Improvements (Future Releases):**  
-> - Per-dimension network indexing: Each input dimension will have its own independent quantization → selection layer...  
-> - Multi-layer forest hierarchy: Instead of applying localization only at the top level...  
-> - Feature-aware routing: Networks will be able to adapt their internal architecture...  
-> 
-> **Trade-offs:**  
-> This new design will be significantly more computationally intensive and memory demanding...  
-> 
-> Until these improvements are implemented, we strongly recommend:  
-> - Using CNF primarily for **single-input** or **low-dimensional** problems  
-> - For multi-dimensional tasks, consider falling back to `MultiCellForest`...  
-> 
-> We apologize for this current limitation and are actively working on a more sophisticated, dimension-aware forest architecture...  
-> Thank you for your understanding — this is a critical area of ongoing development in Zevihanthosa 2.7+.
+> We continue working toward memory-efficient, adaptive, and truly high-dimensional forest architectures.
+
+Thank you for following Zevihanthosa development — 2.8 represents a bold step toward extreme specialization.
 
 ---
 
@@ -197,16 +184,16 @@ print("CellForest sin-approx at x=0.1 →", cf.process(0.1, train=False, distanc
 print("CellForest sin-approx at x=0.9 →", cf.process(0.9, train=False, distance_sharpness=32)) # expected: 0.7060592426208783
 
 # 8. MultiCellForest – robust approximation of complex 2D function (simplified for better convergence)
-mcf = MultiCellForest(cellscount=64, icount=2, ocount=1, learning=0.08)
-for _ in range(100000):
+mcf = MultiCellForest(cellscount=32, icount=2, ocount=1, learning=0.08)
+for i in range(30000):
     x = random.random()
     y = random.random()
     target = (math.sin(x * 5) + math.cos(y * 5)) / 4 + 0.5  # simpler 2D oscillation (lower frequency, easier to learn)
-    mcf.process([x, y], target=[target], distance_sharpness=32)
-print("MultiCellForest at [0.1, 0.2] →", mcf.process([0.1, 0.2], train=False, distance_sharpness=32)[0]) # expected: 0.7549319611180857
-print("MultiCellForest at [0.9, 0.8] →", mcf.process([0.9, 0.8], train=False, distance_sharpness=32)[0]) # expected: 0.09220656536782279
-print("MultiCellForest at [0.5, 0.5] →", mcf.process([0.5, 0.5], train=False, distance_sharpness=32)[0]) # expected: 0.4493321321392557
-print("MultiCellForest at [0.0, 1.0] →", mcf.process([0.0, 1.0], train=False, distance_sharpness=32)[0]) # expected: 0.5709155463658065
+    mcf.process([x, y], target=[target], distance_sharpness=16, top_k=2)
+print("MultiCellForest at [0.1, 0.2] →", mcf.process([0.1, 0.2], train=False, distance_sharpness=16, top_k=2)[0]) # expected: 0.7549319611180857
+print("MultiCellForest at [0.9, 0.8] →", mcf.process([0.9, 0.8], train=False, distance_sharpness=16, top_k=2)[0]) # expected: 0.09220656536782279
+print("MultiCellForest at [0.5, 0.5] →", mcf.process([0.5, 0.5], train=False, distance_sharpness=16, top_k=2)[0]) # expected: 0.4493321321392557
+print("MultiCellForest at [0.0, 1.0] →", mcf.process([0.0, 1.0], train=False, distance_sharpness=16, top_k=2)[0]) # expected: 0.5709155463658065
 
 # 9. CellNetwork – Learning a Continuous Sine Wave Mapping
 # Architecture: 1 input (x) -> 16 hidden neurons -> 1 output (sin(x))
@@ -261,7 +248,7 @@ cnf = CellNetworkForest(
 
 print("Training CellNetworkForest (CNF) on Noisy 2D Modulated Wave...")
 # Training data: complex 2D surface with gaussian noise for challenge
-for i in range(120000):
+for i in range(12000):
     x_val = random.random()
     y_val = random.random()
     # Target: sin(2πx) * cos(2πy) – non-separable, oscillatory 2D function
@@ -315,45 +302,43 @@ Input [0.3, 0.3] → [0.19918553864873334, 0.19918553864873334, 0.19918553864873
 Input [0.5, 0.6] → [0.35441220242318905, 0.35441220242318905, 0.35441220242318905]
 Input [1.0, 1.0] → [0.6960045996154952, 0.6960045996154952, 0.6960045996154952]
 Input [0.2, 0.8] → [0.31786344456514853, 0.31786344456514853, 0.31786344456514853]
-CellForest sin-approx at x=0.1 → 0.9192891914216803
-CellForest sin-approx at x=0.9 → 0.7069943727992968
-MultiCellForest at [0.1, 0.2] → 0.7596576216489921
-MultiCellForest at [0.9, 0.8] → 0.12025277413180832
-MultiCellForest at [0.5, 0.5] → 0.4806804450111819
-MultiCellForest at [0.0, 1.0] → 0.569294229076006
+CellForest sin-approx at x=0.1 → 0.9072199230444465
+CellForest sin-approx at x=0.9 → 0.6906707460269892
+MultiCellForest at [0.1, 0.2] → 0.7939261980651235
+MultiCellForest at [0.9, 0.8] → 0.08501925302360366
+MultiCellForest at [0.5, 0.5] → 0.38642050241327847
+MultiCellForest at [0.0, 1.0] → 0.55784065747824
 Training CellNetwork on Sine Wave...
 --- Zevihanthosa CellNetwork: Sine Wave Accuracy Report ---
-Angle:  0°   | Pred:  0.1127 | Real:  0.0000 | Error: 0.112727 | Acc: 94.36%
-Angle:  45°  | Pred:  0.7041 | Real:  0.7071 | Error: 0.003009 | Acc: 99.85%
-Angle:  90°  | Pred:  0.9719 | Real:  1.0000 | Error: 0.028108 | Acc: 98.59%
-Angle: 180°  | Pred:  0.0287 | Real:  0.0000 | Error: 0.028675 | Acc: 98.57%
-Angle: 270°  | Pred: -0.9440 | Real: -1.0000 | Error: 0.056022 | Acc: 97.20%
-Angle: 360°  | Pred: -0.0792 | Real: -0.0000 | Error: 0.079180 | Acc: 96.04%
-Overall CellNetwork Model Consistency: 97.44%
+Angle:  0°   | Pred:  0.0919 | Real:  0.0000 | Error: 0.091869 | Acc: 95.41%
+Angle:  45°  | Pred:  0.7403 | Real:  0.7071 | Error: 0.033185 | Acc: 98.34%
+Angle:  90°  | Pred:  0.9430 | Real:  1.0000 | Error: 0.057000 | Acc: 97.15%
+Angle: 180°  | Pred: -0.0057 | Real:  0.0000 | Error: 0.005684 | Acc: 99.72%
+Angle: 270°  | Pred: -0.9686 | Real: -1.0000 | Error: 0.031372 | Acc: 98.43%
+Angle: 360°  | Pred: -0.1237 | Real: -0.0000 | Error: 0.123668 | Acc: 93.82%
+Overall CellNetwork Model Consistency: 97.14%
 Training CellNetworkForest (CNF) on Noisy 2D Modulated Wave...
 --- Zevihanthosa CellNetworkForest (CNF – localized ensemble network) Accuracy ---
-Point:   (0,0)    | Pred:  0.1203 | Real:  0.0000 | Error: 0.120297 | Acc: 93.99%
-Point:  (90°,0°)  | Pred:  0.4196 | Real:  1.0000 | Error: 0.580370 | Acc: 70.98%
-Point: (180°,90°) | Pred: -0.2444 | Real:  0.0000 | Error: 0.244428 | Acc: 87.78%
-Point: (270°,180°) | Pred:  0.4237 | Real:  1.0000 | Error: 0.576297 | Acc: 71.19%
-Point: (0°,270°)  | Pred: -0.1197 | Real: -0.0000 | Error: 0.119718 | Acc: 94.01%
-Point: (360°,360°) | Pred:  0.0037 | Real: -0.0000 | Error: 0.003736 | Acc: 99.81%
-Overall CNF (Network Forest) Consistency: 86.29%
+Point:   (0,0)    | Pred:  0.1379 | Real:  0.0000 | Error: 0.137930 | Acc: 93.10%
+Point:  (90°,0°)  | Pred:  0.8302 | Real:  1.0000 | Error: 0.169780 | Acc: 91.51%
+Point: (180°,90°) | Pred: -0.0183 | Real:  0.0000 | Error: 0.018299 | Acc: 99.09%
+Point: (270°,180°) | Pred:  0.8330 | Real:  1.0000 | Error: 0.167007 | Acc: 91.65%
+Point: (0°,270°)  | Pred: -0.0025 | Real: -0.0000 | Error: 0.002482 | Acc: 99.88%
+Point: (360°,360°) | Pred:  0.1311 | Real: -0.0000 | Error: 0.131085 | Acc: 93.45%
+Overall CNF (Network Forest) Consistency: 94.78%
 ```
 
-### Why Zevihanthosa?
-
-* **True Hybrid Intelligence**: Neural + Linear + Memory + Symbolic + Localized Ensembles + Deep Networks + Multi-Layer Networks.
+## Why Zevihanthosa?
+* **True Hybrid Intelligence**: Neural + Linear + Memory + Symbolic + Massively Scaled Localized Ensembles + Deep Networks + Multi-Layer Networks.
 * **Maximum Transparency, Persistence & Interpretability**.
 * **Ultra Lightweight & Fully Portable** (Zero external binary dependencies).
-* **Ideal for Education, Research, and Embedded AI**.
+* **Ideal for Education, Research, Embedded AI, and Extreme Specialization Experiments**.
 * **Extremely Modular** – easy to extend with new cell types.
 
 ### License
-
 MIT License — free for any use, commercial or personal.
 
 ---
-
 **Zevihanthosa — Simplicity meets persistent, interpretable, hybrid intelligence.**
-*ZevihaNut/2.7 — January 2026: Deep networks, localized ensembles, and symbolic maturity. Ready.*
+
+*ZevihaNut/2.8 — January 2026: Massive expert scaling, aggressive input compression, anchor blending, and thousands of hyper-specialized units. Specialization taken to the extreme. Ready.*
