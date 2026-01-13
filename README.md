@@ -37,9 +37,9 @@ All components continue to support **online** and **incremental learning** with 
   8. Symbolic regression with safe AST evaluation (`FuncCell`)
   9. Minimal perceptron without momentum (`NanoCell`)
   10. Localized single-input ensemble (`CellForest`)
-  11. **Massively scaled localized full dense ensemble** (`MultiCellForest`)
+  11. **Localized full dense ensemble** (`MultiCellForest`)
   12. Deep Multi-Layer Backpropagation Network (`CellNetwork`)
-  13. **Massively scaled localized ensemble of deep multi-layer networks** (`CellNetworkForest`)
+  13. **Localized ensemble of deep multi-layer networks** (`CellNetworkForest`)
 
 - **High Interpretability** – readable symbolic formulas and persistent states
 - **Robust Scaling & Aggressive Quantization/Compression Tools**
