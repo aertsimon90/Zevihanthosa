@@ -46,7 +46,7 @@ All components continue to support **online** and **incremental learning** with 
 
 ### Core Components
 #### 1. `Cell` — Classic Momentum-Optimized Neuron
-![image](images/image1.png)
+<img src="images/image1.png" width="600" height="400">
 #### 2. `LinearSumCell` — `output = activation(input + bias)`
 ![image](images/image2.png)
 #### 3. `LinearMulCell` — `output = activation(input * weight)`
@@ -65,11 +65,11 @@ All components continue to support **online** and **incremental learning** with 
 ![image](images/image9.png)
 #### 10. `CellForest` — Distance-weighted ensemble of `Cell`s with center-aware localization & top_k selection
 ![image](images/image10.png)
-#### 11. `MultiCellForest` — **Massive** ensemble of `MultiCell`s (cellscount**icount experts), cluster-compressed routing, anchor blending
+#### 11. `MultiCellForest` — **Localized** ensemble of `MultiCell`s
 ![image](images/image11.png)
 #### 12. `CellNetwork` — Multi-layer dense network with automated backpropagation and per-layer activations
 ![image](images/image12.png)
-#### 13. `CellNetworkForest` — **Massive** ensemble of `CellNetwork`s (networkcount**input_size experts), cluster-compressed multi-dimensional routing, anchor blending
+#### 13. `CellNetworkForest` — **Localized** ensemble of `CellNetwork`s
 ![image](images/image13.png)
 
 ### New in ZevihaNut/2.8
