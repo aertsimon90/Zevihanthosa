@@ -98,6 +98,7 @@ No pip install required.
 ### Usage Examples
 
 ```python
+from zevihanthosa import *
 import random
 import math
 
