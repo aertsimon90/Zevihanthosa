@@ -71,9 +71,13 @@ All components continue to support **online** and **incremental learning** with 
 
 > [!TIP] 
 > **Resolved Limitations in 2.8 Previous bottlenecks have been addressed to ensure a more stable development experience:**
+> 
 > Scalability: The transition to forest_depth has eliminated the memory issues associated with raw exponential growth, allowing for deeper architectures without crashing.
+> 
 > Performance: Training time and routing quality have been optimized through the squeezeforclust mechanism and localized targeting.
+> 
 > Simplified Tuning: The complex distance_sharpness parameter has been removed in favor of more intuitive top_k and clusters settings.
+> 
 > High-Dimensional Stability: Multi-dimensional routing is now more robust, allowing for better handling of complex input features without the need for external dimensionality reduction.
 
 Thank you for following Zevihanthosa development — 2.8 represents a bold step toward expert specialization.
