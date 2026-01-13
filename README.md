@@ -110,7 +110,6 @@ No pip install required.
 ### Usage Examples
 
 ```python
-from zevihanthosa import *
 import random
 import math
 
@@ -176,24 +175,24 @@ print("Input [0.2, 0.8] →", mc.process([0.2, 0.8], train=False))      # expect
 
 # 7. New: CellForest – smooth approximation of complex 1D function
 cf = CellForest(cellscount=64, learning=0.12)
-for _ in range(25000):
+for _ in range(40000):
     x = random.random()
     y = math.sin(x * 10) / 2 + 0.5  # fast oscillating wave
-    cf.process(x, target=y, distance_sharpness=32)
-print("CellForest sin-approx at x=0.1 →", cf.process(0.1, train=False, distance_sharpness=32)) # expected: 0.9207354924039483
-print("CellForest sin-approx at x=0.9 →", cf.process(0.9, train=False, distance_sharpness=32)) # expected: 0.7060592426208783
+    cf.process(x, target=y, top_k=2)
+print("CellForest sin-approx at x=0.1 →", cf.process(0.1, train=False, top_k=2)) # expected: 0.9207354924039483
+print("CellForest sin-approx at x=0.9 →", cf.process(0.9, train=False, top_k=2)) # expected: 0.7060592426208783
 
 # 8. MultiCellForest – robust approximation of complex 2D function (simplified for better convergence)
 mcf = MultiCellForest(cellscount=32, icount=2, ocount=1, learning=0.08)
-for i in range(30000):
+for i in range(50000):
     x = random.random()
     y = random.random()
     target = (math.sin(x * 5) + math.cos(y * 5)) / 4 + 0.5  # simpler 2D oscillation (lower frequency, easier to learn)
-    mcf.process([x, y], target=[target], distance_sharpness=16, top_k=2)
-print("MultiCellForest at [0.1, 0.2] →", mcf.process([0.1, 0.2], train=False, distance_sharpness=16, top_k=2)[0]) # expected: 0.7549319611180857
-print("MultiCellForest at [0.9, 0.8] →", mcf.process([0.9, 0.8], train=False, distance_sharpness=16, top_k=2)[0]) # expected: 0.09220656536782279
-print("MultiCellForest at [0.5, 0.5] →", mcf.process([0.5, 0.5], train=False, distance_sharpness=16, top_k=2)[0]) # expected: 0.4493321321392557
-print("MultiCellForest at [0.0, 1.0] →", mcf.process([0.0, 1.0], train=False, distance_sharpness=16, top_k=2)[0]) # expected: 0.5709155463658065
+    mcf.process([x, y], target=[target], top_k=2)
+print("MultiCellForest at [0.1, 0.2] →", mcf.process([0.1, 0.2], train=False, top_k=2)[0]) # expected: 0.7549319611180857
+print("MultiCellForest at [0.9, 0.8] →", mcf.process([0.9, 0.8], train=False, top_k=2)[0]) # expected: 0.09220656536782279
+print("MultiCellForest at [0.5, 0.5] →", mcf.process([0.5, 0.5], train=False, top_k=2)[0]) # expected: 0.4493321321392557
+print("MultiCellForest at [0.0, 1.0] →", mcf.process([0.0, 1.0], train=False, top_k=2)[0]) # expected: 0.5709155463658065
 
 # 9. CellNetwork – Learning a Continuous Sine Wave Mapping
 # Architecture: 1 input (x) -> 16 hidden neurons -> 1 output (sin(x))
@@ -248,7 +247,7 @@ cnf = CellNetworkForest(
 
 print("Training CellNetworkForest (CNF) on Noisy 2D Modulated Wave...")
 # Training data: complex 2D surface with gaussian noise for challenge
-for i in range(12000):
+for i in range(50000):
     x_val = random.random()
     y_val = random.random()
     # Target: sin(2πx) * cos(2πy) – non-separable, oscillatory 2D function
@@ -257,7 +256,7 @@ for i in range(12000):
     noisy_raw = raw_target + random.gauss(0, 0.1)
     # Normalize to [0,1] for framework stability
     target_val = max(0.0, min(1.0, (noisy_raw + 1.0) / 2.0))
-    cnf.process([x_val, y_val], target=[target_val], distance_sharpness=48)
+    cnf.process([x_val, y_val], target=[target_val], top_k=2)
 
 # --- Comprehensive 2D Modulated Wave Inference & Accuracy Report (comparison) ---
 # Test points chosen for diverse regions: peaks, troughs, and interactions
@@ -273,7 +272,7 @@ test_points = [
 print("--- Zevihanthosa CellNetworkForest (CNF – localized ensemble network) Accuracy ---")
 total_acc_cnf = 0
 for inputs, label in test_points:
-    raw_out = cnf.process(inputs, train=False, distance_sharpness=48)[0]
+    raw_out = cnf.process(inputs, train=False, top_k=2)[0]
     predicted_raw = (raw_out * 2.0) - 1.0  # Denormalize
     actual_raw = math.sin(inputs[0] * math.pi * 2) * math.cos(inputs[1] * math.pi * 2)
     error = abs(actual_raw - predicted_raw)
@@ -302,30 +301,30 @@ Input [0.3, 0.3] → [0.19918553864873334, 0.19918553864873334, 0.19918553864873
 Input [0.5, 0.6] → [0.35441220242318905, 0.35441220242318905, 0.35441220242318905]
 Input [1.0, 1.0] → [0.6960045996154952, 0.6960045996154952, 0.6960045996154952]
 Input [0.2, 0.8] → [0.31786344456514853, 0.31786344456514853, 0.31786344456514853]
-CellForest sin-approx at x=0.1 → 0.9072199230444465
-CellForest sin-approx at x=0.9 → 0.6906707460269892
-MultiCellForest at [0.1, 0.2] → 0.7939261980651235
-MultiCellForest at [0.9, 0.8] → 0.08501925302360366
-MultiCellForest at [0.5, 0.5] → 0.38642050241327847
-MultiCellForest at [0.0, 1.0] → 0.55784065747824
+CellForest sin-approx at x=0.1 → 0.9119575184998867
+CellForest sin-approx at x=0.9 → 0.6914212261446739
+MultiCellForest at [0.1, 0.2] → 0.7611578047035364
+MultiCellForest at [0.9, 0.8] → 0.10671033969829927
+MultiCellForest at [0.5, 0.5] → 0.387072592260856
+MultiCellForest at [0.0, 1.0] → 0.5733994449097569
 Training CellNetwork on Sine Wave...
 --- Zevihanthosa CellNetwork: Sine Wave Accuracy Report ---
-Angle:  0°   | Pred:  0.0919 | Real:  0.0000 | Error: 0.091869 | Acc: 95.41%
-Angle:  45°  | Pred:  0.7403 | Real:  0.7071 | Error: 0.033185 | Acc: 98.34%
-Angle:  90°  | Pred:  0.9430 | Real:  1.0000 | Error: 0.057000 | Acc: 97.15%
-Angle: 180°  | Pred: -0.0057 | Real:  0.0000 | Error: 0.005684 | Acc: 99.72%
-Angle: 270°  | Pred: -0.9686 | Real: -1.0000 | Error: 0.031372 | Acc: 98.43%
-Angle: 360°  | Pred: -0.1237 | Real: -0.0000 | Error: 0.123668 | Acc: 93.82%
-Overall CellNetwork Model Consistency: 97.14%
+Angle:  0°   | Pred:  0.0927 | Real:  0.0000 | Error: 0.092746 | Acc: 95.36%
+Angle:  45°  | Pred:  0.7472 | Real:  0.7071 | Error: 0.040120 | Acc: 97.99%
+Angle:  90°  | Pred:  0.9317 | Real:  1.0000 | Error: 0.068326 | Acc: 96.58%
+Angle: 180°  | Pred:  0.0076 | Real:  0.0000 | Error: 0.007556 | Acc: 99.62%
+Angle: 270°  | Pred: -0.9310 | Real: -1.0000 | Error: 0.068991 | Acc: 96.55%
+Angle: 360°  | Pred: -0.1008 | Real: -0.0000 | Error: 0.100796 | Acc: 94.96%
+Overall CellNetwork Model Consistency: 96.85%
 Training CellNetworkForest (CNF) on Noisy 2D Modulated Wave...
 --- Zevihanthosa CellNetworkForest (CNF – localized ensemble network) Accuracy ---
-Point:   (0,0)    | Pred:  0.1379 | Real:  0.0000 | Error: 0.137930 | Acc: 93.10%
-Point:  (90°,0°)  | Pred:  0.8302 | Real:  1.0000 | Error: 0.169780 | Acc: 91.51%
-Point: (180°,90°) | Pred: -0.0183 | Real:  0.0000 | Error: 0.018299 | Acc: 99.09%
-Point: (270°,180°) | Pred:  0.8330 | Real:  1.0000 | Error: 0.167007 | Acc: 91.65%
-Point: (0°,270°)  | Pred: -0.0025 | Real: -0.0000 | Error: 0.002482 | Acc: 99.88%
-Point: (360°,360°) | Pred:  0.1311 | Real: -0.0000 | Error: 0.131085 | Acc: 93.45%
-Overall CNF (Network Forest) Consistency: 94.78%
+Point:   (0,0)    | Pred:  0.0944 | Real:  0.0000 | Error: 0.094397 | Acc: 95.28%
+Point:  (90°,0°)  | Pred:  0.9105 | Real:  1.0000 | Error: 0.089513 | Acc: 95.52%
+Point: (180°,90°) | Pred:  0.0444 | Real:  0.0000 | Error: 0.044420 | Acc: 97.78%
+Point: (270°,180°) | Pred:  0.9027 | Real:  1.0000 | Error: 0.097274 | Acc: 95.14%
+Point: (0°,270°)  | Pred: -0.0365 | Real: -0.0000 | Error: 0.036544 | Acc: 98.17%
+Point: (360°,360°) | Pred: -0.0783 | Real: -0.0000 | Error: 0.078342 | Acc: 96.08%
+Overall CNF (Network Forest) Consistency: 96.33%
 ```
 
 ## Why Zevihanthosa?
