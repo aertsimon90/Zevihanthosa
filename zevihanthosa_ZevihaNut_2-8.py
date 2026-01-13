@@ -741,7 +741,7 @@ class MultiCellForest:
             self.cells[i].activation = obj
         self.activation = obj
     def get_target_cells(self, inp, top_k=4, clusters=32):
-        inp = squeezeforclust(inp[:self.forest_depth], k=clusters)
+        inp = squeezeforclust(inp, k=clusters)
         cells = []
         cellscount = len(self.cells)
         inpr = inp*cellscount
@@ -857,7 +857,7 @@ class CellNetworkForest:
             self.networks[i].update_activations(objs)
         self.activations = objs
     def get_target_networks(self, inp, top_k=4, clusters=32):
-        inp = squeezeforclust(inp[:self.forest_depth], k=clusters)
+        inp = squeezeforclust(inp, k=clusters)
         ns = []
         networkcount = len(self.networks)
         inpr = inp*networkcount
