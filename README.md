@@ -4,6 +4,9 @@
 ## ZevihaNut/2.8 Model (Latest Release - January 2026)
 *A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, massively scaled localized ensembles, and **Deep Multi-Layer Networks** — with complete serialization, enhanced numerical stability, aggressive input compression, and dramatically expanded expert pools.*
 
+> 👉 **New?**  
+> Read the manifesto: **[WHATADIFF.md — What a Difference?](WHATADIFF.md)**
+
 ### Overview
 
 **Zevihanthosa** is a minimalist and highly modular AI framework designed for rapid prototyping of transparent, persistent, and hybrid intelligent systems.
