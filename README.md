@@ -5,18 +5,18 @@
 *A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, massively scaled localized ensembles, and **Deep Multi-Layer Networks** — with complete serialization, enhanced numerical stability, aggressive input compression, and dramatically expanded expert pools.*
 
 ### Overview
-**Zevihanthosa** is a minimalist, powerful, and highly extensible artificial intelligence framework designed for experimentation, education, and rapid prototyping of transparent, persistent, and hybrid intelligent systems.
 
-The **ZevihaNut/2.8** release (January 2026) introduces a major shift toward **massively parallel localized specialization** with the following key advancements:
+**Zevihanthosa** is a minimalist and highly modular AI framework designed for rapid prototyping of transparent, persistent, and hybrid intelligent systems.
 
-- **Aggressive Input Compression** — New `squeezeforclust` mechanism for extremely compact multi-dimensional coordinate encoding  
-- **Massive Expert Scaling** — `MultiCellForest` now creates `cellscount ** input_count` cells, `CellNetworkForest` uses `networkcount ** input_layer_size` networks  
-- **Anchor-based Ensemble Blending** — The most relevant (best) unit/network now has significantly stronger influence on the final output  
-- **Center-aware Localization** — Floating-point indexing with cell/network center offset `(i+0.5)` for smoother relevance gradients  
-- **Cluster-aware Routing** — `clustmin`/`clustmax` + `squeezeforclust` for sharper and more stable multi-dimensional target selection  
-- Retained all stability & flexibility improvements from 2.7
+The latest update transitions the system from brute-force scaling to a more refined **Flexible Localized Specialization** logic, introducing the following advancements:
 
-All cells continue to support fully **online, incremental learning** with momentum and optional perceptron mode. Only minimal dependencies required.
+* **Refined Data Compression:** The `squeezeforclust` mechanism converts multi-dimensional coordinates into a compact index, now offering a more stable and manageable compression ratio.
+* **Adjustable Forest Depth:** Replacing fixed exponential growth, the `forest_depth` parameter allows users to precisely control the total number of units within `MultiCellForest` and `CellNetworkForest`.
+* **Center-Aware Localization:** Floating-point indexing with a center offset of `(i+0.5)` ensures smoother, gradient-compatible transitions between data points during cell and network selection.
+* **Anchor-Based Ensemble Blending:** The most relevant "best" unit selected via `top_k` now exerts a significantly stronger influence on the final output, increasing the accuracy of expert units.
+* **Cluster-Aware Routing:** The routing system, supported by `clustmin` and `clustmax` algorithms, produces sharper and more consistent results when selecting targets in multi-dimensional space.
+
+All components continue to support **online** and **incremental learning** with minimal dependencies, maintaining the framework's core philosophy of accessibility and persistence.
 
 ### Key Features
 - **Pure Python & Minimal Dependencies** (`random`, `math`, `json`, `ast`)
@@ -60,39 +60,23 @@ All cells continue to support fully **online, incremental learning** with moment
 #### 13. `CellNetworkForest` — **Massive** ensemble of `CellNetwork`s (networkcount**input_size experts), cluster-compressed multi-dimensional routing, anchor blending
 
 ### New in ZevihaNut/2.8
-- **squeezeforclust** — New aggressive multi-dimensional input compression & quantization method for forest routing
-- **Massive Expert Pool Scaling**  
-  • `MultiCellForest`: now spawns `cellscount ** input_count` independent `MultiCell` instances  
-  • `CellNetworkForest`: now spawns `networkcount ** first_layer_size` complete deep networks
-- **Anchor Blending** — Most relevant expert/network (highest relevance score) now acts as a strong "anchor" and receives extra weight in final output mixing
-- **Center-aware Index Calculation** — `(i + 0.5)` centering in relevance computation → smoother transitions between experts
-- **clustmin / clustmax** — Specialized min/max-aware clamping for compression-aware quantization
-- **Improved Forest Routing** — All multi-dimensional forests now use `squeezeforclust` instead of simple averaging → better handling of structured multi-feature inputs
-- **Top-K + Anchor Synergy** — Combination of limited top-k selection + strong anchor influence improves both efficiency and output quality
 
-> [!NOTE]  
-> **2.8 Philosophy**  
-> ZevihaNut/2.8 moves decisively toward the "thousands of highly specialized experts" paradigm.  
-> Instead of trying to make one forest better at everything, we massively increase the number of experts and use very aggressive compression + anchor blending to route inputs to the most relevant specialists.  
-> Early tests show significantly sharper local approximation behavior, especially on functions with many different regimes.
+* **Refined Multi-Dimensional Compression:** The `squeezeforclust` mechanism provides a balanced method for encoding multi-feature inputs into compact coordinates for forest routing.
+* **Controllable Expert Scaling:** Rather than fixed exponential growth, the introduction of the `forest_depth` parameter allows for a tunable number of experts in `MultiCellForest` and `CellNetworkForest`.
+* **Anchor-Based Ensemble Blending:** The most relevant expert (the "anchor") now exerts a dominant influence on the final output, ensuring that the highest-scoring unit leads the prediction.
+* **Center-Aware Localization:** Relevance computation utilizes `(i + 0.5)` centering to create smoother transitions and gradients between neighboring experts in the forest.
+* **Cluster-Aware Quantization:** New `clustmin` and `clustmax` functions facilitate specialized clamping, ensuring quantization is stable and compression-aware.
+* **Optimized Forest Routing:** Multi-dimensional forests now leverage `squeezeforclust` to handle structured multi-feature inputs more effectively than simple averaging.
+* **Efficiency via Top-K Synergy:** By combining limited `top_k` selection with strong anchor weighting, the system improves both computational efficiency and output quality.
 
-> [!WARNING]  
-> **Current Trade-offs & Limitations in 2.8**  
-> 
-> - Memory consumption grows **exponentially** with input dimensionality  
->   → `MultiCellForest` with 64 cells and 4 inputs = **16 million** cells (!)
-> - Training time increases dramatically with expert count  
-> - Still sensitive to proper tuning of `distance_sharpness`, `top_k`, and `clusters` parameters  
-> - Multi-dimensional routing quality, while improved, remains heuristic-based  
-> 
-> **Recommended usage patterns (2.8):**
-> - Single-input or very low-dimensional problems → full power of massive scaling  
-> - Medium dimensionality (2–4 inputs) → carefully tune `cellscount`/`networkcount` (16–64 range most practical)  
-> - High-dimensional problems → consider dimensionality reduction first or wait for future hierarchical routing improvements
-> 
-> We continue working toward memory-efficient, adaptive, and truly high-dimensional forest architectures.
+> [!TIP] 
+> **Resolved Limitations in 2.8 Previous bottlenecks have been addressed to ensure a more stable development experience:**
+> Scalability: The transition to forest_depth has eliminated the memory issues associated with raw exponential growth, allowing for deeper architectures without crashing.
+> Performance: Training time and routing quality have been optimized through the squeezeforclust mechanism and localized targeting.
+> Simplified Tuning: The complex distance_sharpness parameter has been removed in favor of more intuitive top_k and clusters settings.
+> High-Dimensional Stability: Multi-dimensional routing is now more robust, allowing for better handling of complex input features without the need for external dimensionality reduction.
 
-Thank you for following Zevihanthosa development — 2.8 represents a bold step toward extreme specialization.
+Thank you for following Zevihanthosa development — 2.8 represents a bold step toward expert specialization.
 
 ---
 
