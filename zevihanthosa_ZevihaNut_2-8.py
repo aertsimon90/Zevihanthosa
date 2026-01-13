@@ -723,13 +723,16 @@ class CellForest:
         self.update_activation(self.activation)
 
 class MultiCellForest:
-    def __init__(self, cellscount=32, weights=None, biases=None, icount=2, ocount=2, learning=None, truely=1, momentumexc=0.9):
-        self.cells = [MultiCell(weights=weights, biases=biases, icount=icount, ocount=ocount, learning=learning, truely=truely, momentumexc=momentumexc) for _ in range(cellscount**icount)]
+    def __init__(self, cellscount=32, weights=None, biases=None, icount=2, ocount=2, learning=None, truely=1, momentumexc=0.9, forest_depth=None):
+        if forest_depth is None:
+            forest_depth = icount
+        self.cells = [MultiCell(weights=weights, biases=biases, icount=icount, ocount=ocount, learning=learning, truely=truely, momentumexc=momentumexc) for _ in range(cellscount**forest_depth)]
         self.cellscount = cellscount
         self.activation = Activation()
         self.update_activation(self.activation)
         self.icount = icount
         self.ocount = ocount
+        self.forest_depth = forest_depth
         self.type = 10
     def limitation(self, limit=512):
         [cell.limitation(limit=limit) for cell in self.cells]
@@ -738,7 +741,7 @@ class MultiCellForest:
             self.cells[i].activation = obj
         self.activation = obj
     def get_target_cells(self, inp, top_k=4, clusters=32):
-        inp = squeezeforclust(inp, k=clusters)
+        inp = squeezeforclust(inp[:self.forest_depth], k=clusters)
         cells = []
         cellscount = len(self.cells)
         inpr = inp*cellscount
@@ -768,7 +771,7 @@ class MultiCellForest:
             result = [0.5]*self.ocount
         return [(i+i2)/2 for i, i2 in zip(result, main)] if pointweight else result
     def savedict(self):
-        return {"t": 10, "ci": self.cellscount, "cs": [save(cell, wantdict=True) for cell in self.cells], "a": self.activation.save(), "ic": self.icount, "oc": self.ocount}
+        return {"t": 10, "ci": self.cellscount, "cs": [save(cell, wantdict=True) for cell in self.cells], "a": self.activation.save(), "ic": self.icount, "oc": self.ocount, "fd": self.forest_depth}
     def loaddict(self, data):
         self.cells = [load(cell, wantdict=True) for cell in data["cs"]]
         self.cellscount = data["ci"]
@@ -776,6 +779,7 @@ class MultiCellForest:
         self.update_activation(self.activation)
         self.icount = data["ic"]
         self.ocount = data["oc"]
+        self.forest_depth = data["fd"]
 
 class CellNetwork:
     def __init__(self, layers=[1, 16, 1], activations=None, learning=None, truely=1, momentumexc=0.9):
@@ -825,22 +829,26 @@ class CellNetwork:
             errors = next_layer_errors
         return final_out
     def savedict(self):
-        return {"t": 11, "rl": self.rawlayers, "l": [[save(cell, wantdict=True) for cell in layer] for layer in self.layers], "a": self.activation.save()}
+        return {"t": 11, "rl": self.rawlayers, "l": [[save(cell, wantdict=True) for cell in layer] for layer in self.layers], "a": [a.save() for a in self.activations]}
     def loaddict(self, data):
         self.layers = [[load(cell, wantdict=True) for cell in layer] for layer in data["l"]]
         self.rawlayers = data["rl"]
-        self.activation.load(data["a"])
-        self.update_activation(self.activation)
+        self.activations = [Activation() for _ in range(len(data["a"]))]
+        [a.load(d) for d, a in zip(data["a"], self.activations)]
+        self.update_activations(self.activations)
 
 class CellNetworkForest:
-    def __init__(self, networkcount=32, layers=[1, 16, 1], activations=None, learning=None, truely=1, momentumexc=0.9):
+    def __init__(self, networkcount=32, layers=[1, 16, 1], activations=None, learning=None, truely=1, momentumexc=0.9, forest_depth=None):
         if activations is None:
             activations = ["s"]*len(layers)
-        self.networks = [CellNetwork(layers=layers, learning=learning, truely=truely, momentumexc=momentumexc) for _ in range(networkcount**layers[0])]
+        if forest_depth is None:
+            forest_depth = layers[0]
+        self.networks = [CellNetwork(layers=layers, learning=learning, truely=truely, momentumexc=momentumexc) for _ in range(networkcount**forest_depth)]
         self.networkcount = networkcount
         self.activations = [Activation(act) for act in activations]
         self.update_activations(self.activations)
         self.layers = layers
+        self.forest_depth = forest_depth
         self.type = 12
     def limitation(self, limit=512):
         [network.limitation(limit=limit) for network in self.network]
@@ -849,7 +857,7 @@ class CellNetworkForest:
             self.networks[i].update_activations(objs)
         self.activations = objs
     def get_target_networks(self, inp, top_k=4, clusters=32):
-        inp = squeezeforclust(inp, k=clusters)
+        inp = squeezeforclust(inp[:self.forest_depth], k=clusters)
         ns = []
         networkcount = len(self.networks)
         inpr = inp*networkcount
@@ -879,10 +887,12 @@ class CellNetworkForest:
             result = [0.5]*self.layers[-1]
         return [(i+i2)/2 for i, i2 in zip(result, main)] if pointweight else result
     def savedict(self):
-        return {"t": 12, "ni": self.networkcount, "ns": [save(network, wantdict=True) for network in self.networks], "ls": self.layers, "a": self.activation.save()}
+        return {"t": 12, "ni": self.networkcount, "ns": [save(network, wantdict=True) for network in self.networks], "ls": self.layers, "fd": self.forest_depth, "a": [a.save() for a in self.activations]}
     def loaddict(self, data):
         self.networks = [load(network, wantdict=True) for network in data["ns"]]
         self.networkcount = data["ni"]
         self.layers = data["ls"]
-        self.activation.load(data["a"])
-        self.update_activation(self.activation)
+        self.forest_depth = data["fd"]
+        self.activations = [Activation() for _ in range(len(data["a"]))]
+        [a.load(d) for d, a in zip(data["a"], self.activations)]
+        self.update_activations(self.activations)
