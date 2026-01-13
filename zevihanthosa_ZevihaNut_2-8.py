@@ -3,7 +3,7 @@ import math
 import json
 import ast
 import operator as op
-from collections import defaultdict
+from functools import lru_cache
 
 OPS = {
     ast.Add: op.add,
@@ -86,18 +86,17 @@ def clustmin(x, k=32):
         return quantization(x, sensitivity=k)
 def clustmax(x, k=32):
     return min(clustmin(x)+(1/(k/2)), 1)
-def squeezeforclust(values, k=32):
-    n = len(values)
-    s = sum(values)
-    if s == 0:
-        return 0.0
-    if s == n:
-        return 1.0
-    val = clustmin(values[0])
-    for i, value in enumerate(values[1:]):
-        value = clustmax(value)
-        val += value/(k**(i+1))
+@lru_cache(maxsize=64)
+def squeezeforclust_maxc(c):
+    val = 0
+    for i, v in enumerate([1]*c):
+        val += v/(10**i)
     return val
+def squeezeforclust(values):
+    val = 0
+    for i, v in enumerate(values):
+        val += v/(10**i)
+    return val/squeezeforclust_maxc(len(values))
 
 # Activation Methods (They all produce an output between 0 and 1)
 class Activation:
@@ -891,3 +890,4 @@ class CellNetworkForest:
         self.layers = data["ls"]
         self.activation.load(data["a"])
         self.update_activation(self.activation)
+ 
