@@ -1,4 +1,4 @@
-**Zevihanthosa - Advanced Artificial Intelligence Framework**  
+# **Zevihanthosa - Advanced Artificial Intelligence Framework**  
 ![ZevihaNut Logo](ZevihaNut.png)
 
 ## ZevihaNut/2.9 Model (Latest Release - January 2026)
