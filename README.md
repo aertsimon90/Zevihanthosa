@@ -1,51 +1,57 @@
-# Zevihanthosa - Advanced Artificial Intelligence Framework
+**Zevihanthosa - Advanced Artificial Intelligence Framework**  
 ![ZevihaNut Logo](ZevihaNut.png)
 
-## ZevihaNut/2.8 Model (Latest Release - January 2026)
-*A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, massively scaled localized ensembles, and **Deep Multi-Layer Networks** — with complete serialization, enhanced numerical stability, aggressive input compression, and dramatically expanded expert pools.*
+## ZevihaNut/2.9 Model (Latest Release - January 2026)
+*A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, massively scaled localized ensembles, and Deep Multi-Layer Networks — now with significantly improved numerical stability, memory reset control, and quantization-aware behavior.*
 
 > 👉 **New Reader?**  
 > Read the manifesto: **[WHATADIFF.md — What a Difference?](WHATADIFF.md)**
 
 ### Overview
+**Zevihanthosa 2.9** brings important stability and control improvements while preserving the framework's core philosophy: extreme minimalism, full online/incremental learning, complete serialization, and hybrid parametric + non-parametric intelligence.
 
-**Zevihanthosa** is a minimalist and highly modular AI framework designed for rapid prototyping of transparent, persistent, and hybrid intelligent systems.
+**Main novelties in 2.9:**
 
-The latest update transitions the system from brute-force scaling to a more refined **Flexible Localized Specialization** logic, introducing the following advancements:
-
-* **Refined Data Compression:** The `squeezeforclust` mechanism converts multi-dimensional coordinates into a compact index, now offering a more stable and manageable compression ratio.
-* **Adjustable Forest Depth:** Replacing fixed exponential growth, the `forest_depth` parameter allows users to precisely control the total number of units within `MultiCellForest` and `CellNetworkForest`.
-* **Center-Aware Localization:** Floating-point indexing with a center offset of `(i+0.5)` ensures smoother, gradient-compatible transitions between data points during cell and network selection.
-* **Anchor-Based Ensemble Blending:** The most relevant "best" unit selected via `top_k` now exerts a significantly stronger influence on the final output, increasing the accuracy of expert units.
-* **Cluster-Aware Routing:** The routing system, supported by `clustmin` and `clustmax` algorithms, produces sharper and more consistent results when selecting targets in multi-dimensional space.
-
-All components continue to support **online** and **incremental learning** with minimal dependencies, maintaining the framework's core philosophy of accessibility and persistence.
+- Every single cell type now has three powerful new stabilization & control methods:
+  - `.forget()` — completely resets all momentum accumulators (mw, mb, etc.)
+  - `.rmtolerance(sensitivity=128)` — rounds values that are very close to integers back to exact integers (helps escape floating-point drift and creates more "crisp" decision boundaries)
+  - `.quantization(sensitivity=128..512)` — aggressive value quantization for better numerical stability and potential memory/performance gains in long-running systems
+- These three methods are implemented consistently across **all** cell types (Cell, MultiInputCell, MultiCell, CellForest, CellNetwork, FuncCell, etc.)
+- Improved `squeezeforclust` & cluster-based routing stability
+- More predictable behavior in very long training runs and deep forest/network structures
 
 ### Key Features
-- **Pure Python & Minimal Dependencies** (`random`, `math`, `json`, `ast`)
-- **Fully Online Learning** – instant adaptation per sample
-- **Deep Hierarchical Learning** – full backpropagation through arbitrary layers
-- **Momentum Optimization** (default 0.9)
-- **Automatic Weight/Bias Clamping**
-- **Flexible Activations** – sigmoid, softsign, tanh, Swish, Positive/Negative Linear, custom zevian
-- **Complete Model Persistence** – save/load/copy any cell or network to/from JSON
-- **13 Learning Paradigms**:
-  1. Classic momentum-optimized neuron (`Cell`)
-  2. Additive linear unit (`LinearSumCell`)
-  3. Multiplicative linear unit (`LinearMulCell`)
-  4. Instance-based memory regressor (`DataCell`)
-  5. Multi-input fusion neuron (`MultiInputCell`)
-  6. Parallel multi-output neuron (`MultiOutputCell`)
-  7. Full dense layer (multi-in → multi-out) (`MultiCell`)
-  8. Symbolic regression with safe AST evaluation (`FuncCell`)
-  9. Minimal perceptron without momentum (`NanoCell`)
-  10. Localized single-input ensemble (`CellForest`)
-  11. **Localized full dense ensemble** (`MultiCellForest`)
-  12. Deep Multi-Layer Backpropagation Network (`CellNetwork`)
-  13. **Localized ensemble of deep multi-layer networks** (`CellNetworkForest`)
 
-- **High Interpretability** – readable symbolic formulas and persistent states
-- **Robust Scaling & Aggressive Quantization/Compression Tools**
+- Pure Python & Minimal Dependencies (`random`, `math`, `json`, `ast`)
+- Fully Online/Incremental Learning – adapts instantly per sample
+- Deep Hierarchical Backpropagation through arbitrary layer counts
+- Momentum Optimization/Exchange (default 0.9)
+- Automatic Weight/Bias Clamping
+- Flexible Activations: sigmoid, softsign, tanh, Swish, Positive/Negative Linear, custom zevian
+- **Complete Model Persistence** — save/load/copy any component to/from JSON
+- **Every cell now includes stabilization toolkit:**
+  - `.forget()` — reset all momentum buffers
+  - `.rmtolerance(sensitivity)` — smart near-integer snapping for stability
+  - `.quantization(sensitivity)` — controlled value discretization
+- 13 Learning Paradigms (all enhanced with new stabilization methods):
+
+  1. Classic momentum neuron → `Cell`
+  2. Additive linear unit → `LinearSumCell`
+  3. Multiplicative linear unit → `LinearMulCell`
+  4. Instance-based memory regressor → `DataCell`
+  5. Multi-input fusion neuron → `MultiInputCell`
+  6. Parallel multi-output neuron → `MultiOutputCell`
+  7. Full dense layer (multi-in → multi-out) → `MultiCell`
+  8. Safe symbolic regression (AST-evaluated) → `FuncCell`
+  9. Minimal perceptron (no momentum) → `NanoCell`
+  10. Localized single-input ensemble → `CellForest`
+  11. Localized full dense ensemble → `MultiCellForest`
+  12. Deep Multi-Layer Backpropagation Network → `CellNetwork`
+  13. Localized ensemble of deep multi-layer networks → `CellNetworkForest`
+
+- High Interpretability — readable symbolic formulas + persistent JSON states
+- Aggressive Quantization, Tolerance Snapping & Compression Tools
+- Center-aware localization + anchor-based ensemble blending
 
 ### Core Components
 #### 1. `Cell` — Classic Momentum-Optimized Neuron
@@ -87,7 +93,7 @@ All components continue to support **online** and **incremental learning** with 
 #### 13. `CellNetworkForest` — Localized ensemble of `CellNetwork`s
 <img src="images/image13.png" width="800" height="400">
 
-### New in ZevihaNut/2.8
+### New in ZevihaNut/2.9
 
 * **Refined Multi-Dimensional Compression:** The `squeezeforclust` mechanism provides a balanced method for encoding multi-feature inputs into compact coordinates for forest routing.
 * **Controllable Expert Scaling:** Rather than fixed exponential growth, the introduction of the `forest_depth` parameter allows for a tunable number of experts in `MultiCellForest` and `CellNetworkForest`.
@@ -96,9 +102,14 @@ All components continue to support **online** and **incremental learning** with 
 * **Cluster-Aware Quantization:** New `clustmin` and `clustmax` functions facilitate specialized clamping, ensuring quantization is stable and compression-aware.
 * **Optimized Forest Routing:** Multi-dimensional forests now leverage `squeezeforclust` to handle structured multi-feature inputs more effectively than simple averaging.
 * **Efficiency via Top-K Synergy:** By combining limited `top_k` selection with strong anchor weighting, the system improves both computational efficiency and output quality.
+* **Full Stabilization Toolkit Across All Cells:**  
+  Every single cell type (from basic `Cell` to complex `MultiCellForest` and `CellNetwork`) now includes three powerful new control & stability methods:
+  - `.forget()` → Instantly resets all momentum accumulators (mw, mb, etc.) — perfect for starting fresh without reinitializing the whole model
+  - `.rmtolerance(sensitivity=128)` → Intelligently snaps near-integer values to exact integers — dramatically reduces floating-point drift accumulation over very long training sessions
+  - `.quantization(sensitivity=128..1024)` → Applies controlled discretization of weights, biases, and learning rates — improves long-term numerical stability and can reduce memory footprint in extreme cases
 
 > [!TIP] 
-> **Resolved Limitations in 2.8 Previous bottlenecks have been addressed to ensure a more stable development experience:**
+> **Resolved Limitations in 2.9 Previous bottlenecks have been addressed to ensure a more stable development experience:**
 > 
 > Scalability: The transition to forest_depth has eliminated the memory issues associated with raw exponential growth, allowing for deeper architectures without crashing.
 > 
@@ -108,7 +119,7 @@ All components continue to support **online** and **incremental learning** with 
 > 
 > High-Dimensional Stability: Multi-dimensional routing is now more robust, allowing for better handling of complex input features without the need for external dimensionality reduction.
 
-Thank you for following Zevihanthosa development — 2.8 represents a bold step toward expert specialization.
+Thank you for following Zevihanthosa development — 2.9 represents a bold step toward expert specialization.
 
 ---
 
@@ -357,4 +368,4 @@ MIT License — free for any use, commercial or personal.
 ---
 **Zevihanthosa — Simplicity meets persistent, interpretable, hybrid intelligence.**
 
-*ZevihaNut/2.8 — January 2026: Expert scaling, input compression, anchor blending, and hyper-specialized units. expert form of specialization. Ready.*
+*ZevihaNut/2.9 — January 2026: Expert scaling, input compression, anchor blending, quantization and hyper-specialized units. expert form of specialization. Ready.*
