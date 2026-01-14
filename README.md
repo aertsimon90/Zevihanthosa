@@ -84,7 +84,7 @@ All components continue to support **online** and **incremental learning** with 
 #### 12. `CellNetwork` — Multi-layer dense network with automated backpropagation and per-layer activations
 <img src="images/image12.png" width="800" height="400">
 
-#### 13. CellNetworkForest` — Localized ensemble of `CellNetwork`s
+#### `13. CellNetworkForest` — Localized ensemble of `CellNetwork`s
 <img src="images/image13.png" width="800" height="400">
 
 ### New in ZevihaNut/2.8
