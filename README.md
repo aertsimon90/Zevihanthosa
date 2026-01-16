@@ -1,57 +1,86 @@
 # **Zevihanthosa - Advanced Artificial Intelligence Framework**  
 ![ZevihaNut Logo](ZevihaNut.png)
 
-## ZevihaNut/2.9 Model (Latest Release - January 2026)
-*A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, massively scaled localized ensembles, and Deep Multi-Layer Networks — now with significantly improved numerical stability, memory reset control, and quantization-aware behavior.*
+## ZevihaNut/3.0 Model (Latest Release - January 2026)
+*A lightweight, pure-Python hybrid AI framework combining parametric neurons, non-parametric memory, safe symbolic regression, massively scaled localized ensembles, and Deep Multi-Layer Networks — now with significantly improved numerical stability, memory reset control, quantization-aware behavior, hierarchical lobe-based modularity, natural error-driven plasticity, and flexible meta-control over learning & forgetting.*
 
 > 👉 **New Reader?**  
 > Read the manifesto: **[WHATADIFF.md — What a Difference?](WHATADIFF.md)**
 
 ### Overview
-**Zevihanthosa 2.9** brings important stability and control improvements while preserving the framework's core philosophy: extreme minimalism, full online/incremental learning, complete serialization, and hybrid parametric + non-parametric intelligence.
+**ZevihaNut/3.0** introduces major advances in stability, plasticity control and hierarchical structure while faithfully preserving the framework’s fundamental philosophy: extreme minimalism, fully online/incremental learning, complete serialization of the entire system, and a deeply hybrid parametric + non-parametric intelligence.
 
-**Main novelties in 2.9:**
+**Main novelties in ZevihaNut/3.0:**
 
-- Every single cell type now has three powerful new stabilization & control methods:
-  - `.forget()` — completely resets all momentum accumulators (mw, mb, etc.)
-  - `.rmtolerance(sensitivity=128)` — rounds values that are very close to integers back to exact integers (helps escape floating-point drift and creates more "crisp" decision boundaries)
-  - `.quantization(sensitivity=128..512)` — aggressive value quantization for better numerical stability and potential memory/performance gains in long-running systems
-- These three methods are implemented consistently across **all** cell types (Cell, MultiInputCell, MultiCell, CellForest, CellNetwork, FuncCell, etc.)
-- Improved `squeezeforclust` & cluster-based routing stability
-- More predictable behavior in very long training runs and deep forest/network structures
+- Introduction of the new **Brain** class — a hierarchical, multi-lobe architecture that allows different modules (lobes) to have distinct roles, learning dynamics, and plasticity profiles while sharing a unified backpropagation pass
+- Completely revamped **forget** mechanism:  
+  `.forget(force)` now accepts a continuous forget factor (0.0 = full reset, 1.0 = no change, 0.3 = strong but gradual forgetting, etc.)  
+  → much finer meta-plasticity control across all cell types and higher structures
+- New **learnrate** parameter propagated through the entire system + optional **naturalderiv** mode  
+  When activated, updates become proportional to |error| → very strong, biologically-inspired adaptation to large errors
+- Per-lobe plasticity modulation via `lobesset`  
+  Each lobe can have independent trainrate and learnrate multipliers → allows creating fast-adapting sensory lobes, slow & stable conceptual lobes, conservative decision/output lobes, etc.
+- Consistent propagation of new control parameters (`learnrate`, `naturalderiv`, `force`) across **all** levels:  
+  single cells → forests → networks → multi-lobe Brain
+- Significantly improved numerical and training stability for very deep, very wide or very long-running incremental/online learning scenarios
 
-### Key Features
+These changes move Zevihanthosa further toward a more modular, biologically plausible and controllable extreme-specialization system — while keeping the core principles of radical minimalism, full incrementality, complete serialization and hybrid parametric/non-parametric nature fully intact.
 
-- Pure Python & Minimal Dependencies (`random`, `math`, `json`, `ast`)
-- Fully Online/Incremental Learning – adapts instantly per sample
-- Deep Hierarchical Backpropagation through arbitrary layer counts
-- Momentum Optimization/Exchange (default 0.9)
-- Automatic Weight/Bias Clamping
-- Flexible Activations: sigmoid, softsign, tanh, Swish, Positive/Negative Linear, custom zevian
-- **Complete Model Persistence** — save/load/copy any component to/from JSON
-- **Every cell now includes stabilization toolkit:**
-  - `.forget()` — reset all momentum buffers
-  - `.rmtolerance(sensitivity)` — smart near-integer snapping for stability
-  - `.quantization(sensitivity)` — controlled value discretization
-- 13 Learning Paradigms (all enhanced with new stabilization methods):
+**Key Features of ZevihaNut/3.0**
 
-  1. Classic momentum neuron → `Cell`
-  2. Additive linear unit → `LinearSumCell`
-  3. Multiplicative linear unit → `LinearMulCell`
-  4. Instance-based memory regressor → `DataCell`
-  5. Multi-input fusion neuron → `MultiInputCell`
-  6. Parallel multi-output neuron → `MultiOutputCell`
-  7. Full dense layer (multi-in → multi-out) → `MultiCell`
-  8. Safe symbolic regression (AST-evaluated) → `FuncCell`
-  9. Minimal perceptron (no momentum) → `NanoCell`
-  10. Localized single-input ensemble → `CellForest`
-  11. Localized full dense ensemble → `MultiCellForest`
-  12. Deep Multi-Layer Backpropagation Network → `CellNetwork`
-  13. Localized ensemble of deep multi-layer networks → `CellNetworkForest`
+- Pure Python & minimal dependencies (`random`, `math`, `json`, `ast`, `functools`)
+- Fully online / incremental learning — true per-sample adaptation with no batch requirement
+- Deep hierarchical backpropagation through arbitrary depth and modular structure
+- Advanced momentum with exchange control (default 0.9)
+- Automatic weight/bias clamping and numerical stability safeguards
+- Rich & flexible activation family:  
+  sigmoid, softsign, tanh, Swish, positive/negative linear, hard-cutoff linear variants, and the custom zevian/nom compression
+- **Complete model persistence** — every component (cells, forests, networks, multi-lobe Brains) can be fully serialized to/from JSON, copied, saved, and restored
+- Powerful per-component **plasticity & stability toolkit** available on every level:
 
-- High Interpretability — readable symbolic formulas + persistent JSON states
-- Aggressive Quantization, Tolerance Snapping & Compression Tools
-- Center-aware localization + anchor-based ensemble blending
+  - `.forget(force)` — continuous forgetting factor (0.0 = full momentum reset, 1.0 = no change, 0.3 = strong gradual decay, etc.)
+  - `.rmtolerance(sensitivity)` — intelligent snapping of near-integer values to exact integers (helps escape floating-point drift)
+  - `.quantization(sensitivity)` — aggressive, tunable value discretization for long-term numerical robustness
+- New **multi-lobe Brain** architecture — allows creating modular, biologically-inspired systems with:
+  - Multiple specialized lobes (sensory, abstract, decision, etc.)
+  - Independent trainrate & learnrate scaling per lobe
+  - Differential plasticity profiles across the hierarchy
+- Optional **naturalderiv** mode — makes learning rate scale dynamically with |error| for stronger, more adaptive updates on large mistakes
+- Consistent propagation of new control parameters (`learnrate`, `naturalderiv`, `force`) through all layers of the system — from single cells to complete Brains
+- **Learning Paradigms in ZevihaNut/3.0**  
+1. Classic momentum neuron  
+   → `Cell`  
+2. Pure additive linear combiner  
+   → `LinearSumCell`  
+3. Pure multiplicative scaling unit  
+   → `LinearMulCell`  
+4. Non-parametric instance-based memory regressor  
+   → `DataCell`  
+5. Multi-input weighted fusion neuron  
+   → `MultiInputCell`  
+6. Single-input → parallel multi-output projector  
+   → `MultiOutputCell`  
+7. Full dense transformation layer (multi-in → multi-out)  
+   → `MultiCell`  
+8. Safe, AST-evaluated symbolic function approximator  
+   → `FuncCell`  
+9. Ultra-minimal perceptron (no momentum, direct updates)  
+   → `NanoCell`  
+10. Input-localized ensemble of single-input specialists  
+    → `CellForest`  
+11. Input-localized ensemble of full dense layers  
+    → `MultiCellForest`  
+12. Deep, backprop-trained multi-layer perceptron network  
+    → `CellNetwork`  
+13. Input-localized ensemble of complete deep networks  
+    → `CellNetworkForest`  
+14. Hierarchical multi-lobe brain with modular, differential plasticity  
+    → `Brain`
+
+- **High Interpretability** — readable symbolic expressions via FuncCell + fully persistent, inspectable JSON states  
+- **Aggressive Numerical Control** — strong quantization, tolerance snapping & value compression tools  
+- **Center-aware Localization** — sharp input-space clustering with distance-based specialist selection  
+- **Anchor-based Ensemble Blending** — weighted blending emphasizing the single best-matching unit
 
 ### Core Components
 #### 1. `Cell` — Classic Momentum-Optimized Neuron
@@ -93,33 +122,57 @@
 #### 13. `CellNetworkForest` — Localized ensemble of `CellNetwork`s
 <img src="images/image13.png" width="800" height="400">
 
-### New in ZevihaNut/2.9
+#### 14. `Brain` — Hierarchical Composition and Chain of `CellNetwork`s (Multi-Lobe Structure)
+<img src="images/image14.png" width="800" height="400">
 
-* **Refined Multi-Dimensional Compression:** The `squeezeforclust` mechanism provides a balanced method for encoding multi-feature inputs into compact coordinates for forest routing.
-* **Controllable Expert Scaling:** Rather than fixed exponential growth, the introduction of the `forest_depth` parameter allows for a tunable number of experts in `MultiCellForest` and `CellNetworkForest`.
-* **Anchor-Based Ensemble Blending:** The most relevant expert (the "anchor") now exerts a dominant influence on the final output, ensuring that the highest-scoring unit leads the prediction.
-* **Center-Aware Localization:** Relevance computation utilizes `(i + 0.5)` centering to create smoother transitions and gradients between neighboring experts in the forest.
-* **Cluster-Aware Quantization:** New `clustmin` and `clustmax` functions facilitate specialized clamping, ensuring quantization is stable and compression-aware.
-* **Optimized Forest Routing:** Multi-dimensional forests now leverage `squeezeforclust` to handle structured multi-feature inputs more effectively than simple averaging.
-* **Efficiency via Top-K Synergy:** By combining limited `top_k` selection with strong anchor weighting, the system improves both computational efficiency and output quality.
-* **Full Stabilization Toolkit Across All Cells:**  
-  Every single cell type (from basic `Cell` to complex `MultiCellForest` and `CellNetwork`) now includes three powerful new control & stability methods:
-  - `.forget()` → Instantly resets all momentum accumulators (mw, mb, etc.) — perfect for starting fresh without reinitializing the whole model
-  - `.rmtolerance(sensitivity=128)` → Intelligently snaps near-integer values to exact integers — dramatically reduces floating-point drift accumulation over very long training sessions
-  - `.quantization(sensitivity=128..1024)` → Applies controlled discretization of weights, biases, and learning rates — improves long-term numerical stability and can reduce memory footprint in extreme cases
+**New in ZevihaNut/3.0**
 
-> [!TIP] 
-> **Resolved Limitations in 2.9 Previous bottlenecks have been addressed to ensure a more stable development experience:**
-> 
-> Scalability: The transition to forest_depth has eliminated the memory issues associated with raw exponential growth, allowing for deeper architectures without crashing.
-> 
-> Performance: Training time and routing quality have been optimized through the squeezeforclust mechanism and localized targeting.
-> 
-> Simplified Tuning: The complex distance_sharpness parameter has been removed in favor of more intuitive top_k and clusters settings.
-> 
-> High-Dimensional Stability: Multi-dimensional routing is now more robust, allowing for better handling of complex input features without the need for external dimensionality reduction.
+* **Hierarchical Multi-Lobe Brain Architecture**  
+  Introduction of the powerful new `Brain` class — a true hierarchical composition of multiple `CellNetwork`s (now called "lobes") with unified backpropagation across the entire structure, enabling deep modular designs with biologically-inspired specialization.
+* **Differential Plasticity & Modular Control**  
+  Per-lobe plasticity tuning via `lobesset` — each lobe can have its own independent `trainrate` and `learnrate` multipliers, allowing fast-adapting sensory lobes, slow & stable conceptual lobes, and ultra-conservative output/decision lobes within the same model.
+* **Continuous & Tunable Forgetting Mechanism**  
+  Major upgrade: `.forget(force)` now accepts a continuous factor (0.0 = complete momentum reset, 1.0 = no change, 0.3 = strong gradual decay, etc.) — giving unprecedented fine-grained meta-plasticity control at every level of the hierarchy.
+* **Natural Error-Proportional Updates**  
+  Brand-new `naturalderiv` mode: when enabled, the effective learning rate scales dynamically with |error| → extremely strong adaptation to large mistakes, more biologically plausible gradient behavior, and better handling of sparse/outlier events.
+* **Propagated Fine-Grained Learning Control**  
+  New `learnrate` parameter flows consistently through the entire system — from individual cells → forests → networks → full multi-lobe Brains — allowing precise adjustment of update magnitudes at any depth.
+* **Enhanced Long-Term Stability & Robustness**  
+  All previous stabilization tools (`.rmtolerance`, `.quantization`, `.forget`) are now even more powerful and uniformly applied across the deeper, more complex hierarchical structures — making extremely long-running incremental learning sessions dramatically more reliable.
+* **Improved Locality & Expert Synergy**  
+  Retained and refined center-aware localization, anchor-dominant blending, top-k selection, and `squeezeforclust` routing — now operating seamlessly within the new multi-lobe hierarchy for even sharper specialization at multiple scales.
 
-Thank you for following Zevihanthosa development — 2.9 represents a bold step toward expert specialization.
+> [!TIP]  
+> **ZevihaNut/3.0 – Towards the Most Realistic Artificial Brain**  
+> 
+> The new `Brain` class is the most significant milestone yet:  
+> it is a **hierarchical, chained structure composed of specially tuned CellNetworks** (now called "lobes").  
+> Each lobe can be independently configured for depth, width, activation behavior, learning dynamics and plasticity profile — allowing the creation of modular, biologically-plausible brain-like hierarchies.
+> 
+> **Core mission reminder**  
+> Zevihanthosa was never designed for conventional industrial-scale machine learning.  
+> Its ultimate goal is to build **the most realistic possible artificial brain** — an extremely specialized, incremental, hybrid (parametric + non-parametric) system that mimics biological neural organization as closely as current minimalistic tools allow.
+> 
+> **Important reality about Brain usage**  
+> When used carefully — with thoughtful lobe arrangement, precise plasticity settings (`lobesset`), naturalderiv mode, and continuous forgetting — `Brain` can produce strikingly realistic, deeply non-linear, context-sensitive behavior.  
+> However, if misused (wrong lobe ordering, mismatched plasticity profiles, over-aggressive learning, or treating it like a standard feed-forward net), it tends to **regress toward linear-like behavior** — losing the very non-linearity and specialization that make it special.
+> 
+> In other words:  
+> A well-tuned Brain can feel disturbingly "alive" and adaptive.  
+> A poorly tuned Brain quickly becomes just another (very expensive) linear regressor.
+> 
+> **Resolved limitations from previous versions**  
+> All major bottlenecks from 2.9 have been addressed and extended to support the new hierarchical reality:
+> - Scalability: forest_depth + multi-lobe design allows very deep yet manageable architectures  
+> - Performance: enhanced squeezeforclust routing + top-k + anchor dominance = fast & precise expert selection even at brain scale  
+> - Tuning simplicity: intuitive per-lobe plasticity control (`lobesset`) replaces many previous magic numbers  
+> - High-dimensional robustness: improved clustering and compression tools handle complex, multi-feature inputs natively  
+> 
+> Thank you for following Zevihanthosa's journey.  
+> Version 3.0 is not just an incremental update — it is the first serious step toward something that might one day resemble a true artificial mind.  
+> But as always: with great realism comes great responsibility in how you tune and use it. 🧠
+
+Thank you for following Zevihanthosa development — 3.0 represents a bold step toward expert specialization.
 
 ---
 
@@ -309,6 +362,46 @@ for inputs, label in test_points:
     print(f"Point: {label:^10} | Pred: {predicted_raw:7.4f} | Real: {actual_raw:7.4f} | Error: {error:.6f} | Acc: {accuracy:.2f}%")
 
 print(f"Overall CNF (Network Forest) Consistency: {total_acc_cnf / len(test_points):.2f}%")
+
+# 11. Brain – Simple Hierarchical Example
+# Why a basic example? Because the brain class requires complex training processes to perform more difficult tasks.
+print("--- Brain: Simple Hierarchical Example ---")
+
+brain = Brain(
+    lobes=[
+        [1, 16],       # Lobe 1: Fast sensory layer (wide & quick)
+        [16, 1]        # Lobe 2: Decision layer (deeper & stable)
+    ]
+)
+
+# Lobe 1 learns fast, Lobe 2 stays slow and stable
+brain.lobesset = [
+    [2.0, 1.4],   # Fast lobe
+    [0.8, 0.7]    # Slow & stable lobe
+]
+
+# Task: Learn the simple quadratic function x²
+print("Brain learning x² function...")
+for _ in range(50000):
+    x = random.random()
+    target = x * x           # Target: x² (already in [0,1])
+    brain.process([x], target=[target]) # you can use naturalderiv=True for more complex tasks
+
+# Test results with accuracy
+print("Test Results (x → x²)")
+print("x     | Predicted | Real       | Difference | Accuracy")
+print("-" * 55)
+total_accuracy = 0
+test_points = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+for x in test_points:
+    pred = brain.process([x], train=False)[0]
+    real = x * x
+    diff = pred - real
+    accuracy = max(0, (1 - abs(diff)) * 100)
+    total_accuracy += accuracy
+    print(f"{x:.1f}   | {pred:.4f}    | {real:.4f}    | {diff:+.4f}   | {accuracy:5.1f}%")
+avg_accuracy = total_accuracy / len(test_points)
+print(f"Overall Average Accuracy: {avg_accuracy:.1f}%")
 ```
 
 ### Example Output
@@ -318,17 +411,17 @@ Cell at 0.6 → 0.032449743937126636
 Cell at 0.8 → 0.964736878960268
 Current smooth estimate: 0.5
 MultiInputCell approx 1/(7+2) from [1/7, 1/2]: 9.154347961916285
-x = 0.0 → (x², √x): [0.012386497402471207, 0.2281075329679371]
-x = 0.25 → (x², √x): [0.057940683286017716, 0.4640935052228233]
-x = 0.5 → (x², √x): [0.23172214712064113, 0.7173350612656512]
-x = 1.0 → (x², √x): [0.8788366685322571, 0.9561269185033562]
+x = 0.0 → (x², √x): [0.012386497402471207, 0.2328382855556689]
+x = 0.25 → (x², √x): [0.057940683286017716, 0.46887922475357646]
+x = 0.5 → (x², √x): [0.23172214712064113, 0.7197183591024585]
+x = 1.0 → (x², √x): [0.8788366685322571, 0.955996432844036]
 Discovered function: x**2**-1
 Test on x=3 → 1.7320508075688772
-Input [0.0, 0.0] → [0.08764712160414166, 0.08764712160414166, 0.08764712160414166]
-Input [0.3, 0.3] → [0.19918553864873334, 0.19918553864873334, 0.19918553864873334]
-Input [0.5, 0.6] → [0.35441220242318905, 0.35441220242318905, 0.35441220242318905]
-Input [1.0, 1.0] → [0.6960045996154952, 0.6960045996154952, 0.6960045996154952]
-Input [0.2, 0.8] → [0.31786344456514853, 0.31786344456514853, 0.31786344456514853]
+Input [0.0, 0.0] → [0.08764712160414166, 0.08971296219786976, 0.09038442506505527]
+Input [0.3, 0.3] → [0.19918553864873334, 0.20107283752326818, 0.2019345723093016]
+Input [0.5, 0.6] → [0.35441220242318905, 0.3546675829614651, 0.3554343762404322]
+Input [1.0, 1.0] → [0.6960045996154952, 0.6916822536868388, 0.6914117042180881]
+Input [0.2, 0.8] → [0.31786344456514853, 0.319476769198645, 0.32069871924780047]
 CellForest sin-approx at x=0.1 → 0.9119575184998867
 CellForest sin-approx at x=0.9 → 0.6914212261446739
 MultiCellForest at [0.1, 0.2] → 0.7611578047035364
@@ -353,14 +446,36 @@ Point: (270°,180°) | Pred:  0.9027 | Real:  1.0000 | Error: 0.097274 | Acc: 95
 Point: (0°,270°)  | Pred: -0.0365 | Real: -0.0000 | Error: 0.036544 | Acc: 98.17%
 Point: (360°,360°) | Pred: -0.0783 | Real: -0.0000 | Error: 0.078342 | Acc: 96.08%
 Overall CNF (Network Forest) Consistency: 96.33%
+--- Brain: Simple Hierarchical Example ---
+Brain learning x² function...
+Test Results (x → x²)
+x     | Predicted | Real       | Difference | Accuracy
+-------------------------------------------------------
+0.0   | 0.0114    | 0.0000    | +0.0114   |  98.9%
+0.2   | 0.0385    | 0.0400    | -0.0015   |  99.8%
+0.4   | 0.1597    | 0.1600    | -0.0003   | 100.0%
+0.6   | 0.3604    | 0.3600    | +0.0004   | 100.0%
+0.8   | 0.6426    | 0.6400    | +0.0026   |  99.7%
+1.0   | 0.9699    | 1.0000    | -0.0301   |  97.0%
+Overall Average Accuracy: 99.2%
 ```
 
 ## Why Zevihanthosa?
-* **True Hybrid Intelligence**: Neural + Linear + Memory + Symbolic + Deep Scaled Localized Ensembles + Deep Networks + Multi-Layer Networks.
-* **Maximum Transparency, Persistence & Interpretability**.
-* **Ultra Lightweight & Fully Portable** (Zero external binary dependencies).
-* **Ideal for Education, Research, Embedded AI, and Extreme Specialization Experiments**.
-* **Extremely Modular** – easy to extend with new cell types.
+
+* **True Hybrid Artificial Brain Intelligence**  
+  Neural momentum cells + pure linear & multiplicative units + non-parametric memory + safe symbolic regression + extreme localized expert ensembles + full deep backprop networks + hierarchical multi-lobe Brains — all fused into one radically minimalist, fully incremental system.
+
+* **Maximum Transparency, Complete Persistence & Deep Interpretability**  
+  Every element — single neuron, forest, network or entire Brain — fully serializable to clean, readable JSON; symbolic expressions stay human-readable forever; the whole model can be inspected, edited or restored at any time.
+
+* **Ultra Lightweight & Truly Portable**  
+  Pure Python with only built-in modules — no external libraries, no binaries, no GPU. Runs anywhere Python exists, perfect for embedded systems, long-term experiments and offline research.
+
+* **Designed for Education, Biological Plausibility Research, Extreme Specialization & Artificial Brain Experiments**  
+  The ideal playground to explore how extreme locality, differential lobe plasticity, continuous forgetting, natural error-driven learning and hierarchical organization can produce surprisingly realistic, brain-like behavior.
+
+* **Extremely Modular & Extensible**  
+  Tiny, self-contained cells can be freely combined, ensembled, stacked into networks, grouped into forests or hierarchically composed into Brains. Adding new cell types, activations or plasticity rules is straightforward while preserving the core philosophy.
 
 ### License
 MIT License — free for any use, commercial or personal.
@@ -368,4 +483,4 @@ MIT License — free for any use, commercial or personal.
 ---
 **Zevihanthosa — Simplicity meets persistent, interpretable, hybrid intelligence.**
 
-*ZevihaNut/2.9 — January 2026: Expert scaling, input compression, anchor blending, quantization and hyper-specialized units. expert form of specialization. Ready.*
+*ZevihaNut/3.0 — January 2026: Hierarchical multi-lobe Brain, differential plasticity, natural error-driven updates, continuous forgetting, realistic artificial brain foundation. Ready.*
