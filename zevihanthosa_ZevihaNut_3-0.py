@@ -304,7 +304,7 @@ def load(data, wantdict=False):
         obj = CellNetworkForest(layers=[0])
         obj.loaddict(data)
     elif t == 13:
-        obj = Brain(lobes=[0])
+        obj = Brain(lobes=[[1,1],[1,1]])
         obj.loaddict(data)
     return obj
 def copy(obj):
