@@ -898,7 +898,7 @@ class MultiCellForest:
         self.forest_depth = data["fd"]
 
 class CellNetwork:
-    def __init__(self, layers=[1, 16, 1], activations=None, learning=None, truely=1, momentumexc=0.9):
+    def __init__(self, layers=[1, 16, 1], weight=None, bias=None, activations=None, learning=None, truely=1, momentumexc=0.9):
         if activations is None:
             activations = ["s"]*len(layers)
         self.layers = []
@@ -906,7 +906,10 @@ class CellNetwork:
         for i in range(len(layers)-1):
             input_count = layers[i]
             output_count = layers[i+1]
-            self.layers.append([MultiInputCell(wcount=input_count, learning=learning, truely=truely, momentumexc=momentumexc) for _ in range(output_count)])
+            weights = None
+            if weight:
+                weights = [weight]*input_count
+            self.layers.append([MultiInputCell(weights=weights, bias=bias, wcount=input_count, learning=learning, truely=truely, momentumexc=momentumexc) for _ in range(output_count)])
         self.activations = [Activation(act) for act in activations]
         self.update_activations(self.activations)
         self.type = 11
@@ -969,12 +972,12 @@ class CellNetwork:
         self.update_activations(self.activations)
 
 class CellNetworkForest:
-    def __init__(self, networkcount=32, layers=[1, 16, 1], activations=None, learning=None, truely=1, momentumexc=0.9, forest_depth=None):
+    def __init__(self, networkcount=32, layers=[1, 16, 1], weight=None, bias=None, activations=None, learning=None, truely=1, momentumexc=0.9, forest_depth=None):
         if activations is None:
             activations = ["s"]*len(layers)
         if forest_depth is None:
             forest_depth = layers[0]
-        self.networks = [CellNetwork(layers=layers, learning=learning, truely=truely, momentumexc=momentumexc) for _ in range(networkcount**forest_depth)]
+        self.networks = [CellNetwork(weight=weight, bias=bias, layers=layers, learning=learning, truely=truely, momentumexc=momentumexc) for _ in range(networkcount**forest_depth)]
         self.networkcount = networkcount
         self.activations = [Activation(act) for act in activations]
         self.update_activations(self.activations)
@@ -1040,10 +1043,10 @@ class CellNetworkForest:
         self.update_activations(self.activations)
 
 class Brain:
-    def __init__(self, lobes=[[1, 16], [16, 32, 16], [16, 1]], activations=None, learning=None, truely=1, momentumexc=0.9):
+    def __init__(self, lobes=[[1, 16], [16, 16], [16, 1]], weight=None, bias=None, activations=None, learning=None, truely=1, momentumexc=0.9):
         if activations is None:
             activations = [[Activation("s") for _ in range(len(layers))] for layers in lobes]
-        self.lobes = [CellNetwork(layers=lobes[i], learning=learning, truely=truely, momentumexc=momentumexc) for i in range(len(lobes))]
+        self.lobes = [CellNetwork(layers=lobes[i], weight=weight, bias=bias, learning=learning, truely=truely, momentumexc=momentumexc) for i in range(len(lobes))]
         self.lobesset = [[1, 1] for _ in range(len(lobes))]
         self.rawlobes = lobes
         self.activations = activations
