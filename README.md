@@ -141,6 +141,8 @@ These changes move Zevihanthosa further toward a more modular, biologically plau
   All previous stabilization tools (`.rmtolerance`, `.quantization`, `.forget`) are now even more powerful and uniformly applied across the deeper, more complex hierarchical structures — making extremely long-running incremental learning sessions dramatically more reliable.
 * **Improved Locality & Expert Synergy**  
   Retained and refined center-aware localization, anchor-dominant blending, top-k selection, and `squeezeforclust` routing — now operating seamlessly within the new multi-lobe hierarchy for even sharper specialization at multiple scales.
+* **Additional information**
+  Weight and bias settings for each model.
 
 > [!TIP]  
 > **ZevihaNut/3.0 – Towards the Most Realistic Artificial Brain**  
